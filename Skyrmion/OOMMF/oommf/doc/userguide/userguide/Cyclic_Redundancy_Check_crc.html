@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2018.2 (Released May 16, 2018) -->
+<HTML>
+<HEAD>
+<TITLE>Cyclic Redundancy Check: crc32</TITLE>
+<META NAME="description" CONTENT="Cyclic Redundancy Check: crc32">
+<META NAME="keywords" CONTENT="userguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2018.2">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userguide.css">
+
+<LINK REL="next" HREF="Killing_OOMMF_Processes_kil.html">
+<LINK REL="previous" HREF="Vector_Field_File_Differenc.html">
+<LINK REL="up" HREF="Command_Line_Utilities.html">
+<LINK REL="next" HREF="Killing_OOMMF_Processes_kil.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF",text="#000000",LINK="#0000FF",
+            VLINK="#4498F0",ALINK="00FFFF">
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html888"
+  HREF="Killing_OOMMF_Processes_kil.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html884"
+  HREF="Command_Line_Utilities.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html878"
+  HREF="Vector_Field_File_Differenc.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html886"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html889"
+  HREF="Killing_OOMMF_Processes_kil.html">Killing OOMMF Processes: killoommf</A>
+<B> Up:</B> <A NAME="tex2html885"
+  HREF="Command_Line_Utilities.html">Command Line Utilities</A>
+<B> Previous:</B> <A NAME="tex2html879"
+  HREF="Vector_Field_File_Differenc.html">Vector Field File Difference:</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001770000000000000000"></A><A NAME="sec:crc32"></A><A NAME="18489"></A><A NAME="18490"></A>
+<BR>
+Cyclic Redundancy Check: crc32
+</H1>
+
+<P>
+The <B>crc32</B> application computes 32-bit cyclic redundancy checksums
+(CRC-32) on files.
+
+<P>
+
+<P>
+<FONT SIZE="+1"><B>Launching</B></FONT>
+<BR>
+The <B>crc32</B> command line is:
+<PRE>
+tclsh oommf.tcl crc32 [standard options] [-binary|-text] \
+   [-decimal|-hex] [-v level] [file ...]
+</PRE>
+where
+<DL>
+<DT><STRONG><TT><B>-binary|-text</B></TT></STRONG></DT>
+<DD>Select binary (default) or text input mode.
+</DD>
+<DT><STRONG><TT><B>-decimal|-hex</B></TT></STRONG></DT>
+<DD>Output CRC value in decimal (default) or hexadecimal format.
+</DD>
+<DT><STRONG><TT><B>-v level</B></TT></STRONG></DT>
+<DD>Verbosity (informational message) level, with 0 generating only error
+  messages and minimal CRC output, and larger numbers generating
+  additional information.  The <TT>level</TT> value is an integer,
+  defaulting to 1.
+</DD>
+<DT><STRONG><TT><B>file ...</B></TT></STRONG></DT>
+<DD>List of files to process.  If no files are listed, then input is read
+ from stdin.
+</DD>
+</DL>
+For each file in the input file list, the CRC-32 is computed and output.
+By default, the computation is on the raw byte stream (binary mode).
+However, if text mode is selected, then text mode translations, e.g.,
+carriage return + newline <!-- MATH
+ $\rightarrow$
+ -->
+<B><IMG
+ WIDTH="21" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img79.gif"
+ ALT="$\rightarrow$"></B> newline conversion, is performed
+before the CRC-32 computation.  Text mode translations usually have no
+effect on Unix systems.  For additional information on text mode, see
+the Tcl documentation for <TT>fconfigure</TT>, specifically ``-translation
+auto.''
+
+<P>
+If the verbosity level is 1 or greater, then the length of the byte
+stream as processed by the CRC-32 computation is also reported.
+
+<P>
+<HR>
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html888"
+  HREF="Killing_OOMMF_Processes_kil.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html884"
+  HREF="Command_Line_Utilities.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html878"
+  HREF="Vector_Field_File_Differenc.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html886"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>
+<BR>
+<!--End of Navigation Panel-->
+<BR><I><A HREF="Credits.html#sec:Credits">OOMMF Documentation Team</A><BR>September 30, 2022</I>
+</BODY>
+</HTML>

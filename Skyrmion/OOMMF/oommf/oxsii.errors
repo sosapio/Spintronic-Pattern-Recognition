@@ -1,0 +1,236 @@
+
+[Oxsii<14696-sosa-pc-Sosa> 16:36:48.710 2024-09-28] 2.0b0 infolog:
+Start: "C:/Users/Sosa/Downloads/oommf/app/oxs/examples/yoyo.mif"
+Options: -threads 6
+
+[Oxsii<14696-sosa-pc-Sosa> 16:36:48.837 2024-09-28] 2.0b0 infolog:
+Loaded "yoyo.mif", CRC: 0xBD70FA8E, 7900 bytes 
+
+[Oxsii<14696-sosa-pc-Sosa> 16:41:16.439 2024-09-28] 2.0b0 infolog:
+Done "yoyo.mif"
+
+[Oxsii<14696-sosa-pc-Sosa> 16:44:09.227 2024-09-28] 2.0b0 infolog:
+Done "yoyo.mif"
+
+[Oxsii<14696-sosa-pc-Sosa> 16:52:38.865 2024-09-28] 2.0b0 infolog:
+End "yoyo.mif"
+
+[Oxsii<11780-sosa-pc-Sosa> 17:14:30.645 2024-10-02] 2.0b0 infolog:
+Start: "C:/Users/Sosa/Downloads/oommf/app/oxs/local/dmexchange6ngbr/skirmion.mif"
+Options: -threads 6
+
+[Oxsii<11780-sosa-pc-Sosa> 17:14:30.831 2024-10-02] 2.0b0 infolog:
+Loaded "skirmion.mif", CRC: 0x423B787F, 2032 bytes 
+
+[Oxsii<11780-sosa-pc-Sosa> 17:15:15.347 2024-10-02] 2.0b0 infolog:
+End "skirmion.mif"
+
+[Oxsii<5868-sosa-pc-Sosa> 18:01:42.821 2024-10-02] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/skyrmion_hw.mif"
+Options: -threads 6
+
+[Oxsii<5868-sosa-pc-Sosa> 18:01:42.941 2024-10-02] 2.0b0 infolog:
+Loaded "skyrmion_hw.mif", CRC: 0xB0DA86C6, 2463 bytes 
+
+[Oxsii<2480-sosa-pc-Sosa> 21:24:22.412 2024-10-02] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif"
+Options: -threads 6
+
+[Oxsii<2480-sosa-pc-Sosa> 21:24:22.508 2024-10-02] 2.0b0 info:
+Message from Vf_FileInput::NewReader (File C:/Users/donahue/projects/tmp/export/oommf20b0/pkg/vf/vecfile.cc, line 171)
+Class revision/date: 1.0.0/17-Mar-1997
+Class maintainer: Michael J. Donahue (michael.donahue@nist.gov) ---
+Unable to open file "otprob1-start.omf" for reading
+
+[Oxsii<2480-sosa-pc-Sosa> 21:24:22.618 2024-10-02] 2.0b0 LoadProblem error:
+Error loading C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif:
+	Error thrown from inside "Oxs_ExtCreateAndRegister" --- Incomplete or incorrect initialization --- Oxs_Ext initialization error in construction of Oxs_FileVectorField:start_file --- Oxs_Ext ERROR: Error detected during construction of Oxs_FileVectorField:start_file; Error reading input file otprob1-start.omf
+-----------
+Stack:
+Error thrown from inside "Oxs_ExtCreateAndRegister" --- Incomplete or incorrect initialization --- Oxs_Ext initialization error in construction of Oxs_FileVectorField:start_file --- Oxs_Ext ERROR: Error detected during construction of Oxs_FileVectorField:start_file; Error reading input file otprob1-start.omf
+    while executing
+"Oxs_ExtCreateAndRegister $spec_key $spec_init_str"
+    ('Oxs_Mif' instance method 'CreateExtObject' line 93)
+    invoked from within
+"Specify Oxs_FileVectorField:start_file [subst {
+   file $start_file
+   atlas :atlas
+   norm 1.0
+}]"
+    (file "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif" line 90)
+    invoked from within
+"{} {# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class by  S. Rohart a..."
+    invoked from within
+"interp2 eval {{} {# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class b..."
+    invoked from within
+"catch [list $mif_interp_local_copy  eval [list {} $filestr]] errmsg"
+    invoked from within
+"_Oxs_Mif0 ReadMif {C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif} {}"
+    invoked from within
+"Oxs_ProbInit $f $MIF_params"
+-----------
+Additional info: OOMMF {} {Incomplete or incorrect initialization} -1
+
+[Oxsii<2480-sosa-pc-Sosa> 21:24:52.221 2024-10-02] 2.0b0 infolog:
+Start: "C:/Users/Sosa/Downloads/session4-samples/otprob1_2.mif"
+Options: -threads 6
+
+[Oxsii<2480-sosa-pc-Sosa> 21:24:52.296 2024-10-02] 2.0b0 infolog:
+Loaded "otprob1_2.mif", CRC: 0xE230F8E4, 2946 bytes 
+
+[Oxsii<2480-sosa-pc-Sosa> 21:27:44.484 2024-10-02] 2.0b0 infolog:
+Done "otprob1_2.mif"
+
+[Oxsii<2480-sosa-pc-Sosa> 21:54:21.815 2024-10-02] 2.0b0 infolog:
+Done "otprob1_2.mif"
+
+[Oxsii<2480-sosa-pc-Sosa> 22:05:32.885 2024-10-02] 2.0b0 infolog:
+Done "otprob1_2.mif"
+
+[Oxsii<10476-sosa-pc-Sosa> 00:08:12.690 2024-10-08] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif"
+Options: -threads 6
+
+[Oxsii<10476-sosa-pc-Sosa> 00:08:12.760 2024-10-08] 2.0b0 info:
+Message from Vf_FileInput::NewReader (File C:/Users/donahue/projects/tmp/export/oommf20b0/pkg/vf/vecfile.cc, line 171)
+Class revision/date: 1.0.0/17-Mar-1997
+Class maintainer: Michael J. Donahue (michael.donahue@nist.gov) ---
+Unable to open file "otprob1-start.omf" for reading
+
+[Oxsii<10476-sosa-pc-Sosa> 00:08:12.864 2024-10-08] 2.0b0 LoadProblem error:
+Error loading C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif:
+	Error thrown from inside "Oxs_ExtCreateAndRegister" --- Incomplete or incorrect initialization --- Oxs_Ext initialization error in construction of Oxs_FileVectorField:start_file --- Oxs_Ext ERROR: Error detected during construction of Oxs_FileVectorField:start_file; Error reading input file otprob1-start.omf
+-----------
+Stack:
+Error thrown from inside "Oxs_ExtCreateAndRegister" --- Incomplete or incorrect initialization --- Oxs_Ext initialization error in construction of Oxs_FileVectorField:start_file --- Oxs_Ext ERROR: Error detected during construction of Oxs_FileVectorField:start_file; Error reading input file otprob1-start.omf
+    while executing
+"Oxs_ExtCreateAndRegister $spec_key $spec_init_str"
+    ('Oxs_Mif' instance method 'CreateExtObject' line 93)
+    invoked from within
+"Specify Oxs_FileVectorField:start_file [subst {
+   file $start_file
+   atlas :atlas
+   norm 1.0
+}]"
+    (file "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif" line 90)
+    invoked from within
+"{} {# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class by  S. Rohart a..."
+    invoked from within
+"interp2 eval {{} {# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class b..."
+    invoked from within
+"catch [list $mif_interp_local_copy  eval [list {} $filestr]] errmsg"
+    invoked from within
+"_Oxs_Mif0 ReadMif {C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif} {}"
+    invoked from within
+"Oxs_ProbInit $f $MIF_params"
+-----------
+Additional info: OOMMF {} {Incomplete or incorrect initialization} -1
+
+[Oxsii<10476-sosa-pc-Sosa> 00:08:46.908 2024-10-08] 2.0b0 infolog:
+End "otprob1_2.mif"
+
+[Oxsii<2976-sosa-pc-Sosa> 00:08:58.528 2024-10-08] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/skyrmion_hw.mif"
+Options: -threads 6
+
+[Oxsii<2976-sosa-pc-Sosa> 00:08:58.647 2024-10-08] 2.0b0 infolog:
+Loaded "skyrmion_hw.mif", CRC: 0xB0DA86C6, 2463 bytes 
+
+[Oxsii<20496-sosa-pc-Sosa> 12:58:31.114 2024-10-14] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif"
+Options: -threads 6
+
+[Oxsii<20496-sosa-pc-Sosa> 12:58:31.177 2024-10-14] 2.0b0 info:
+Message from Vf_FileInput::NewReader (File C:/Users/donahue/projects/tmp/export/oommf20b0/pkg/vf/vecfile.cc, line 171)
+Class revision/date: 1.0.0/17-Mar-1997
+Class maintainer: Michael J. Donahue (michael.donahue@nist.gov) ---
+Unable to open file "otprob1-start.omf" for reading
+
+[Oxsii<20496-sosa-pc-Sosa> 12:58:31.184 2024-10-14] 2.0b0 LoadProblem error:
+Error loading C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif:
+	Error thrown from inside "Oxs_ExtCreateAndRegister" --- Incomplete or incorrect initialization --- Oxs_Ext initialization error in construction of Oxs_FileVectorField:start_file --- Oxs_Ext ERROR: Error detected during construction of Oxs_FileVectorField:start_file; Error reading input file otprob1-start.omf
+-----------
+Stack:
+Error thrown from inside "Oxs_ExtCreateAndRegister" --- Incomplete or incorrect initialization --- Oxs_Ext initialization error in construction of Oxs_FileVectorField:start_file --- Oxs_Ext ERROR: Error detected during construction of Oxs_FileVectorField:start_file; Error reading input file otprob1-start.omf
+    while executing
+"Oxs_ExtCreateAndRegister $spec_key $spec_init_str"
+    ('Oxs_Mif' instance method 'CreateExtObject' line 93)
+    invoked from within
+"Specify Oxs_FileVectorField:start_file [subst {
+   file $start_file
+   atlas :atlas
+   norm 1.0
+}]"
+    (file "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif" line 90)
+    invoked from within
+"{} {# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class by  S. Rohart a..."
+    invoked from within
+"interp2 eval {{} {# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class b..."
+    invoked from within
+"catch [list $mif_interp_local_copy  eval [list {} $filestr]] errmsg"
+    invoked from within
+"_Oxs_Mif0 ReadMif {C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/otprob1_2.mif} {}"
+    invoked from within
+"Oxs_ProbInit $f $MIF_params"
+-----------
+Additional info: OOMMF {} {Incomplete or incorrect initialization} -1
+
+[Oxsii<20496-sosa-pc-Sosa> 13:02:03.620 2024-10-14] 2.0b0 infolog:
+End "otprob1_2.mif"
+
+[Oxsii<4724-sosa-pc-Sosa> 13:02:15.127 2024-10-14] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/session4-samples/otprob1_2.mif"
+Options: -threads 6
+
+[Oxsii<4724-sosa-pc-Sosa> 13:02:15.235 2024-10-14] 2.0b0 infolog:
+Loaded "otprob1_2.mif", CRC: 0xE230F8E4, 2946 bytes 
+
+[Oxsii<4724-sosa-pc-Sosa> 13:04:57.720 2024-10-14] 2.0b0 infolog:
+Done "otprob1_2.mif"
+
+[Oxsii<4724-sosa-pc-Sosa> 13:16:58.255 2024-10-14] 2.0b0 infolog:
+Done "otprob1_2.mif"
+
+[Oxsii<4724-sosa-pc-Sosa> 00:08:54.374 2024-10-15] 2.0b0 infolog:
+End "otprob1_2.mif"
+
+[Oxsii<4724-sosa-pc-Sosa> 00:08:54.378 2024-10-15] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/session4-samples/spinping.mif"
+Options: -threads 6
+
+[Oxsii<4724-sosa-pc-Sosa> 00:08:55.967 2024-10-15] 2.0b0 infolog:
+Loaded "spinping.mif", CRC: 0x75BABA6B, 2623 bytes 
+
+[Oxsii<4724-sosa-pc-Sosa> 00:19:42.308 2024-10-15] 2.0b0 infolog:
+Done "spinping.mif"
+
+[Oxsii<4724-sosa-pc-Sosa> 01:30:50.971 2024-10-15] 2.0b0 infolog:
+End "spinping.mif"
+
+[Oxsii<4724-sosa-pc-Sosa> 01:30:50.994 2024-10-15] 2.0b0 infolog:
+Start: "C:/Users/Sosa/OneDrive - University of Florida/EEL4924C/OOMMF/session4-samples/spinping.mif"
+Options: -threads 6
+
+[Oxsii<4724-sosa-pc-Sosa> 01:30:52.351 2024-10-15] 2.0b0 infolog:
+Loaded "spinping.mif", CRC: 0x75BABA6B, 2623 bytes 
+
+[Oxsii<4724-sosa-pc-Sosa> 01:41:35.135 2024-10-15] 2.0b0 infolog:
+Done "spinping.mif"

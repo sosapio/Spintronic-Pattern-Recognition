@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2018.2 (Released May 16, 2018) -->
+<HTML>
+<HEAD>
+<TITLE>MIF 1.1</TITLE>
+<META NAME="description" CONTENT="MIF 1.1">
+<META NAME="keywords" CONTENT="userguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2018.2">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userguide.css">
+
+<LINK REL="next" HREF="MIF_1.2.html">
+<LINK REL="previous" HREF="Problem_Specification_File_.html">
+<LINK REL="up" HREF="Problem_Specification_File_.html">
+<LINK REL="next" HREF="Material_parameters.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF",text="#000000",LINK="#0000FF",
+            VLINK="#4498F0",ALINK="00FFFF">
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html1086"
+  HREF="Material_parameters.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html1082"
+  HREF="Problem_Specification_File_.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html1076"
+  HREF="Problem_Specification_File_.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html1084"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1087"
+  HREF="Material_parameters.html">Material parameters</A>
+<B> Up:</B> <A NAME="tex2html1083"
+  HREF="Problem_Specification_File_.html">Problem Specification File Formats</A>
+<B> Previous:</B> <A NAME="tex2html1077"
+  HREF="Problem_Specification_File_.html">Problem Specification File Formats</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001810000000000000000"></A><A NAME="sec:mif1format"></A>
+<BR>
+MIF 1.1
+</H1>
+The MIF&nbsp;1.1 format is an older micromagnetic problem specification
+format used by the mmSolve 2D solvers.  It is not compatible with the
+MIF&nbsp;2.1 format used by the Oxs 3D solvers.  However, the command line tool
+<A HREF="mifconvert.html#sec:mifconvert"><B>mifconvert</B></A> may be used as a conversion aid;
+<B>mifconvert</B> is also called automatically by Oxs solvers when a
+MIF&nbsp;1.x file is input to them.
+
+<P>
+A sample MIF&nbsp;1.1 file is <A HREF="Miscellaneous.html#fig:mif1sample">included below</A>.  The first line of a MIF file must be of the
+form ``<code>#</code> MIF x.y'', where x.y represents the format revision
+number.  (The predecessor MIF&nbsp;1.0 format was not included in any
+released version of OOMMF.)
+
+<P>
+After the format identifier line, any line ending in a backslash,
+`<TT>&#92;</TT>', is joined to the succeeding line before any other processing
+is performed.  Lines beginning with a `<code>#</code>' character are comments
+and are ignored.  Blank lines are also ignored.
+
+<P>
+All other lines must consist of a <EM>Record Identifier</EM> followed by
+a parameter list.  The Record Identifier is separated from the
+parameter list by one or more `:' and/or `=' characters.  Whitespace
+and case is ignored in the Record Identifier field.
+
+<P>
+The parameter list must be a proper Tcl list<A NAME="21316"></A>.  The
+parameters are parsed (broken into separate elements) following normal
+Tcl rules; in short, items are separated by whitespace, except as
+grouped by double quotes and curly braces.  Opening braces and quotes
+must be whitespace separated from the preceding text.  The grouping
+characters are removed during parsing.  Any `<TT>#</TT>' character that is
+found outside of any grouping mechanism is interpreted as a comment
+start character.  The `<TT>#</TT>' and all following characters on that line
+are interpreted as a comment.
+
+<P>
+Order of the records in a MIF&nbsp;1.1 file is unimportant, except as
+explicitly stated below.  If two or more lines contain the same Record
+Identifier<A NAME="21317"></A>, then the last one takes precedence,
+with the exception of Field Range records, of which there may be several
+active.  All records are required unless listed as optional.  Some of
+these record types are not supported by <B>mmProbEd</B>, however you
+may modify a MIF&nbsp;1.1 file using any plain text editor and supply it to
+<A HREF="2D_Micromagnetic_Interactiv.html#sec:mmsolve2d"
+ NAME="21323"><B>mmSolve2D</B></A>
+using
+<A HREF="Micromagnetic_Problem_File_.html#sec:filesource"
+ NAME="21328"><B>FileSource</B></A>.
+
+<P>
+For convenience, the Record Identifier tags are organized into several
+groups; these groups correspond to the top-level buttons presented by
+<B>mmProbEd</B>.  We follow this convention below.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1088"
+  HREF="Material_parameters.html">Material parameters</A>
+<LI><A NAME="tex2html1089"
+  HREF="Demag_specification.html">Demag specification</A>
+<LI><A NAME="tex2html1090"
+  HREF="Part_geometry.html">Part geometry</A>
+<LI><A NAME="tex2html1091"
+  HREF="Initial_magnetization.html">Initial magnetization</A>
+<LI><A NAME="tex2html1092"
+  HREF="Experiment_parameters.html">Experiment parameters</A>
+<LI><A NAME="tex2html1093"
+  HREF="Output_specification.html">Output specification</A>
+<LI><A NAME="tex2html1094"
+  HREF="Miscellaneous.html">Miscellaneous</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html1086"
+  HREF="Material_parameters.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html1082"
+  HREF="Problem_Specification_File_.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html1076"
+  HREF="Problem_Specification_File_.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html1084"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>
+<BR>
+<!--End of Navigation Panel-->
+<BR><I><A HREF="Credits.html#sec:Credits">OOMMF Documentation Team</A><BR>September 30, 2022</I>
+</BODY>
+</HTML>

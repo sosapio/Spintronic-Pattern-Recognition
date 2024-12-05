@@ -1,0 +1,70 @@
+\chapter{OOMMF Launcher/Control Interface: mmLaunch}\label{sec:mmlaunch}
+\index{application!mmLaunch}
+
+\begin{center}
+\includepic{mmlaunch-ss}{mmLaunch Screen Shot}
+\end{center}
+
+\starsechead{Overview}
+The application \app{mmLaunch} launches, monitors, and controls other 
+\OOMMF\ applications.  It is the \OOMMF\ application which is
+most closely connected to the account service directory and host
+service directory applications that run behind the scenes.  It also
+provides user interfaces\index{mmLaunch~user~interface}
+to any applications, notably
+\hyperrefhtml{\app{Oxsii}}{\app{Oxsii}
+(Sec.~}{)}{sec:oxsii} and
+\hyperrefhtml{\app{mmSolve2D}}{\app{mmSolve2D}
+(Sec.~}{)}{sec:mmsolve2d}, that do not have their own user interface
+window.
+
+\starsechead{Launching}
+\app{mmLaunch} should be launched using the \hyperrefhtml{bootstrap
+application}{bootstrap application (Ch.~}{)}{sec:cll}.  The command
+line is
+\begin{verbatim}
+tclsh oommf.tcl mmLaunch [standard options]
+\end{verbatim}
+
+\starsechead{Controls}
+\index{launch!with~mmLaunch|(}
+The \app{mmLaunch} interface consists of two columns. The
+\btn{Programs} column contains buttons labeled with the names of
+\OOMMF\ applications that may be launched under the account managed by
+this account service directory.  Clicking on one of these buttons
+launches the corresponding application.  Only one click is needed,
+though there will be some delay before the launched application
+displays a window to the user.  Multiple clicks will launch multiple
+copies of the application.
+
+The second column, labeled \btn{Running Applications}, contains a list
+of \OOMMF\ applications that are registered with the account
+server. If the account server is not already running, then
+\app{mmLaunch} will start it, in which case there may be a slight
+delay. Each entry in the \btn{Running Applications} list includes both
+the application name and an ID number by which multiple copies of the
+same application may be distinguished.  This ID number is also
+displayed in the title bar of the corresponding application's user
+interface window.  When an application exits, its entry is
+automatically removed from the \btn{Running Applications} list.
+
+\index{mmLaunch~user~interface|(}
+Any of the running applications that do not provide their own
+interface window will be displayed in \app{mmLaunch} with a
+checkbutton.  The checkbutton toggles the display of an interface
+which \app{mmLaunch} provides on behalf of that application.  The only
+\OOMMF\ applications currently using this service are the 3D solvers
+\hyperrefhtml{\app{Oxsii} and \app{Boxsi}}{\app{Oxsii} and \app{Boxsi}
+(Ch.~}{)}{sec:oxs}, the 2D solvers \hyperrefhtml{\app{mmSolve2D and
+\app{batchsolve}}}{\app{mmSolve2D} and \app{batchsolve}
+(Ch.~}{)}{sec:mmsolve}, and the archive application
+\hyperrefhtml{\app{mmArchive}}{\app{mmArchive}
+(Ch.~}{)}{sec:mmarchive}.  These interfaces are described in the
+documentation for the corresponding applications.
+\index{mmLaunch~user~interface|)}
+
+The menu selection \btn{File\pipe Exit} terminates the \app{mmLaunch}
+application, and the \btn{File\pipe Exit All OOMMF} selection
+terminates all applications in the \btn{Running Applications} list,
+and then exits \app{mmLaunch}.  The menu \btn{Help} provides the usual
+help facilities.

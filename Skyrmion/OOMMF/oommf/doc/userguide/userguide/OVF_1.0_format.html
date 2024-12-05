@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2018.2 (Released May 16, 2018) -->
+<HTML>
+<HEAD>
+<TITLE>The OVF 1.0 format</TITLE>
+<META NAME="description" CONTENT="The OVF 1.0 format">
+<META NAME="keywords" CONTENT="userguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2018.2">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userguide.css">
+
+<LINK REL="next" HREF="OVF_2.0_format.html">
+<LINK REL="previous" HREF="OVF_0.0_format.html">
+<LINK REL="up" HREF="Vector_Field_File_Format_OV.html">
+<LINK REL="next" HREF="Segment_Header_block.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF",text="#000000",LINK="#0000FF",
+            VLINK="#4498F0",ALINK="00FFFF">
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html1374"
+  HREF="Segment_Header_block.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html1370"
+  HREF="Vector_Field_File_Format_OV.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html1364"
+  HREF="OVF_0.0_format.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html1372"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1375"
+  HREF="Segment_Header_block.html">Segment Header block</A>
+<B> Up:</B> <A NAME="tex2html1371"
+  HREF="Vector_Field_File_Format_OV.html">Vector Field File Format</A>
+<B> Previous:</B> <A NAME="tex2html1365"
+  HREF="OVF_0.0_format.html">The OVF 0.0 format</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002020000000000000000"></A><A NAME="sec:ovfformat"></A>
+<BR>
+The OVF 1.0 format
+</H1>
+A commented sample OVF 1.0 file is provided
+<A HREF="Data_block.html#fig:ovfsample">below</A>.
+An OVF file has an ASCII header and trailer, and a data block that
+may be either ASCII or binary.  All non-data lines begin with a `<TT>#</TT>'
+character; double `<TT>##</TT>' mark the start of a comment, which
+continues until the end of the line.  There is no line continuation
+character.  Lines starting with a `<TT>#</TT>' but containing only whitespace
+characters are ignored.
+
+<P>
+All non-empty non-comment lines in the file header are structured as
+label+value pairs.  The label tag consists of all characters after the
+initial `<TT>#</TT>' up to the first colon (`:') character.  Case is ignored,
+and all space and tab characters are eliminated.  The value consists
+of all characters after the first colon, continuing up to a `<code>##</code>'
+comment designator or the end of the line.
+
+<P>
+The first line of an OVF file should be a file type identification
+line, having the form
+<PRE>
+# OOMMF: rectangular mesh v1.0
+</PRE>
+or
+<PRE>
+# OOMMF: irregular mesh v1.0
+</PRE>
+where the value ``rectangular mesh v1.0'' or ``irregular mesh v1.0''
+identifies the mesh type and revision.  While the OVF 1.0 format was
+under development in earlier OOMMF releases, the revision strings
+<TT>0.99</TT> and <TT>0.0a0</TT> were sometimes recorded on the file type
+identification line. OOMMF treats all of these as synonyms for
+<TT>1.0</TT> when reading OVF files.
+
+<P>
+The remainder of the file is conceptually broken into Segment
+blocks<A NAME="22640"></A>, and each Segment block is composed of a
+(Segment) Header block and a Data block.  Each block begins with a
+``<code># Begin: &lt;block type&gt;</code>'' line, and ends with a corresponding
+``<code># End: &lt;block type&gt;</code>'' line.  The number of Segment blocks is
+specified in the
+<PRE>
+# Segment count: 1
+</PRE>
+line.  Currently only 1 segment is allowed.  This may be changed in
+the future to allow for multiple vector fields per file.
+This is followed by
+<PRE>
+# Begin: Segment
+</PRE>
+to start the first segment.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html1376"
+  HREF="Segment_Header_block.html">Segment Header block</A>
+<LI><A NAME="tex2html1377"
+  HREF="Data_block.html">Data block</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html1374"
+  HREF="Segment_Header_block.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html1370"
+  HREF="Vector_Field_File_Format_OV.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html1364"
+  HREF="OVF_0.0_format.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html1372"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>
+<BR>
+<!--End of Navigation Panel-->
+<BR><I><A HREF="Credits.html#sec:Credits">OOMMF Documentation Team</A><BR>September 30, 2022</I>
+</BODY>
+</HTML>

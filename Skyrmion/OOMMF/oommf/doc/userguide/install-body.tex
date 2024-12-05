@@ -1,0 +1,1226 @@
+\chapter{Installation}\label{sec:install}
+\index{installation}
+
+\section{Requirements}\label{sec:install.requirements}
+\OOMMF\ software is written in \Cplusplus\ and \Tcl.  It uses the \Tcl-based
+\Tk\ Windowing Toolkit to create graphical user interfaces that are
+portable to many varieties of \Unix, \Windows, and \MacOSX.
+
+\Tcl\ and \Tk\ must be installed before installing \OOMMF.
+\Tcl\ and \Tk\ are available for free from the
+\htmladdnormallinkfoot{Tcl Developer Xchange}{https://www.tcl-lang.org/}.
+We recommend the latest stable
+versions of \Tcl\ and \Tk\ concurrent with this release of \OOMMF.
+\OOMMF\ requires\index{requirement!Tcl/Tk}
+at least version 8.5 of \Tcl\ and \Tk.  \OOMMF\ software
+does not support any alpha or beta versions of \Tcl/\Tk, and
+each release of \OOMMF\ may not work with later releases of
+\Tcl/\Tk.  Check the release dates of both \OOMMF\ and
+\Tcl/\Tk\ to ensure compatibility.
+
+A \Tcl/\Tk\ installation includes two shell programs.  The names of
+these programs may vary depending on the \Tcl/\Tk\ version and the
+type of platform.  The first shell program contains an interpreter
+for the base \Tcl\ language.  In the \OOMMF\ documentation we refer
+to this program as \fn{tclsh}\index{application!tclsh}.
+The second shell program contains
+an interpreter for the base \Tcl\ language extended by additional
+\Tcl\ commands supplied by the \Tk\ toolkit.  In the
+\OOMMF\ documentation we refer to this program as
+\fn{wish}\index{application!wish}.
+Consult your \Tcl/\Tk\ documentation to determine
+the actual names of these programs on your platform (for example,
+\fn{tclsh86.exe} or \fn{wish8.6}).
+
+\OOMMF\ applications communicate via TCP/IP\index{TCP/IP} network sockets.
+This means that \OOMMF\ requires\index{requirement!TCP/IP}
+support for networking, even
+on a stand-alone machine.  At a minimum, \OOMMF\ must be able to
+access the loopback interface so that the host can talk to
+itself using TCP/IP.
+
+\index{application!Xvfb|(}
+\OOMMF\ applications that use \Tk\ require a windowing system and
+a valid display.  On Unix systems, this means that an X server must
+be running.  If you need to run \OOMMF\ applications on a Unix system
+without display hardware or software, you may need to start the
+application with command line option
+\hyperrefhtml{\texttt{\textbf{-tk 0}}}{\textsf{\textbf{-tk 0}} (see Ch.~}{)}{sec:cll}
+or use the
+\htmladdnormallinkfoot{Xvfb}{https://www.x.org/archive/X11R7.6/doc/man/man1/Xvfb.1.xhtml}
+virtual frame buffer.
+\index{application!Xvfb|)}
+
+%\index{requirement!disk~space|(}
+%The \OOMMF\ source distribution unpacks into a directory tree containing
+%about 1500 files and directories, occupying approximately 80 MB of
+%storage.  The amount of disk space needed for compiling and linking
+%varies greatly between platforms; allow up to an additional 60 MB for
+%the build.  Removing intermediate object modules (cf.\ the \cd{pimake}
+%``objclean'' target, in \html{the} \hyperrefhtml{Reducing Disk Space
+%Usage}{Reducing Disk Space Usage, Sec.~}{,
+%below}{sec:install.reducedisk} \html{section}) reduces the final space
+%requirement for source + binary executables to between 80 MB and 90 MB.
+%The \OOMMF\ distribution containing \Windows\ executables unpacks into a
+%directory tree occupying about 85 MB of storage.
+%{\bf Note:} On a
+%non-compressed {\tt FAT16} file system on a large disk, \OOMMF\ may take
+%up much more disk space.  This is because on such systems, the minimum
+%size of any file is large, as much as 32 KB.  Since this is much larger
+%than many files in the \OOMMF\ distribution require, a great deal of
+%disk space is wasted.
+%\index{requirement!disk~space|)}
+
+\index{compilers}\index{platforms}
+To build \OOMMF\ software from source code, you will
+need\index{requirement!C++~compiler} a \Cplusplus\ compiler
+that implements the features of the C++11 standard.
+%capable of handling
+%C++ templates, C++ exceptions, and (for the \OOMMF\ eXtensible Solver)
+%the C++ Standard Template Library.
+You will need other software
+development utilities for your platform as well.
+We do development and
+test builds on the following platforms, although porting to others
+should not be too difficult:
+
+% Note 1: Don't use transparent images, because mmHelp renders them
+%   rather slowly.
+% Note 2: makeimage (maybe +tabular?) breaks on newer systems, with
+%   latex2html v1.71 and v1.68.  OTOH, v1.68 works on older systems,
+%   so it is not clear what the problem is.  The error message is:
+%          panic: end_shift at /usr/local/bin/latex2html line 11720.
+%   This is with Perl v5.8.0.  So, we have to render the table
+%   directly.  This is actually preferred with real HTML browsers,
+%   but as of this writing (Dec-2004) mmHelp doesn't do tables.
+% Note 3: Update, Mar-2021: mmHelp does tables now, so one can build
+%   with or without the \begin{makeimage}/\end{makeimage}
+%   environment. The table renders a bit cleaner with makeimage, but
+%   some versions of latex2html don't seem to handle the makeimage
+%   environment. Specifically, the version reporting to be "Version 2012
+%   (1.2)" doesn't work. OTOH, on some machines we have installed
+%   "Version 2018" which handles the makeimage enviroment fine.
+\begin{center}
+%\html{\begin{makeimage}\htmlimage{no_transparent}}
+\begin{tabular}{|l|l|}\hline
+Platform & Compilers \\ \hline
+% AIX & VisualAge C++ (xlC), Gnu g++ \\
+%Alpha/Linux & Compaq C++, Gnu g++ \\
+%Alpha/Tru64 & Compaq C++ (cxx) \\
+%Alpha/Windows NT & Microsoft Visual C++ \\
+%HP-UX & aCC \\
+Windows &
+Microsoft Visual C++, MinGW g++, Cygwin g++
+%Microsoft Visual C++, Borland C++, \\
+% & Digital Mars dmc, MinGW g++, Cygwin
+%, Intel C++
+\\
+Linux/x86 & Gnu g++, Intel C++
+% , Portland Group pgCC
+\\
+%Linux/Itanium & Intel C++, Gnu g++ \\
+\MacOSX & Clang C++, Gnu g++\\
+%MIPS/IRIX 6 (SGI) & MIPSpro C++ \\
+%SPARC/Solaris & Sun Workshop C++ \\
+\hline
+\end{tabular}
+%\html{\end{makeimage}}
+\end{center}
+
+\section{Basic Installation}\label{sec:install.basic}
+% Note: LaTeXML uses \label value to set file names.
+
+Follow the instructions in the following sections, in order,
+to prepare \OOMMF\ software for use on your computer.
+
+\subsection{Download}\label{sec:install.download}
+% Note: LaTeXML uses \label value to set file names.
+\index{download}
+
+The latest release of the \OOMMF\ software may be retrieved from the
+\htmladdnormallinkfoot{\OOMMF\ download
+page}{https://math.nist.gov/oommf/software.html}.  Each release is
+available in two formats.  The first format is a gzipped tar file
+containing an archive of all the \OOMMF\ source code.  The second format
+is a \fn{.zip} compressed archive containing source code and
+pre-compiled executables for \Windows.  Each \Windows\ binary
+distribution is compatible with only a particular sequence of releases
+of \Tcl/\Tk.  For example, a Windows binary release for \Tcl/\Tk\ 8.6.x
+is compatible with \Tcl/\Tk\ 8.6.0, 8.6.1, \ldots.
+%Other release
+%formats, e.g., pre-compiled executables for Microsoft
+%\Windows~NT running on a Compaq Alpha Systems RISC-based microprocessor
+%system, and/or compatible with older versions of \Tcl/\Tk, may be made
+%available upon request.
+
+For the first format, unpack the distribution archive using gunzip and
+tar:
+\begin{verbatim}
+gunzip -c oommf20a0.tar.gz | tar xvf -
+\end{verbatim}
+
+For the other format(s), you will need a utility program to unpack the
+\fn{.zip} archive.
+%This program must preserve the directory structure
+%of the files in the archive, and it must be able to generate files with
+%names not limited to the old MSDOS 8.3 format.  Some very old
+%versions of the pkzip utility do not have these properties.
+One utility program which is known to be suitable is
+\htmladdnormallinkfoot{UnZip}{http://www.info-zip.org/pub/infozip/UnZip.html}.
+
+Using your utility, unpack the \fn{.zip} archive, e.g.
+\begin{verbatim}
+unzip oommf20a0_86.zip
+\end{verbatim}
+
+For either distribution format, the unpacking sequence creates a
+subdirectory \fn{oommf} which contains all the files and directories
+of the \OOMMF\ distribution.  If a subdirectory named \fn{oommf}
+already existed (say, from an earlier \OOMMF\ release), then
+files in the new distribution overwrite those of the same name already
+on the disk.  Some care may be needed in that circumstance to be
+sure that the resulting mix of files from an old and a new
+\OOMMF\ distribution combine to create a working set of files.
+
+\subsection{Effects of the Installed \Tcl/\Tk}\label{sec:install.tcltk}
+% Note: LaTeXML uses \label value to set file names.
+\OOMMF\ interacts with your \Tcl/\Tk\ installation in several ways.  One
+important restriction is that the major+minor release number of
+\Tcl/\Tk\ must match the major+minor release number of the \Tcl/\Tk\
+that \OOMMF\ was built against.  For example, if \OOMMF\ was built using
+\Tcl/\Tk\ 8.5.18, then the resulting executables can run with any past or
+future releases of \Tcl/\Tk\ from the 8.5.* series, but they won't run
+(for example) with \Tcl/\Tk\ 8.4.20 or 8.6.4.
+
+Another restriction is that the width of memory addresses in \Tcl/\Tk\
+and \OOMMF\ must match.  Most general-purpose operating systems today
+use primarily 64-bit memory addresses, but for backwards compatibility
+can also run programs using 32-bit memory addresses.  However, a 64-bit
+executable cannot link against a 32-bit library, or vice versa.
+Therefore, if you have a 64-bit \Tcl/\Tk\ installed, then you will need
+a 64-bit \OOMMF, and likewise a 32-bit \Tcl/\Tk\ needs a 32-bit \OOMMF.
+
+Another restriction is that while \OOMMF\ can be built to run in
+parallel across multiple cpu cores on a shared memory machine using
+threads, to do this requires that the installed \Tcl/Tk\ be
+thread-enabled.  Typical \Tcl/Tk\ installs on \Windows\ and \MacOSX\ are
+thread-enabled.  \Tcl/Tk\ installs on recent releases of \Unix\ also
+tend to be thread-enabled, but some older versions have non-threaded
+\Tcl/Tk\ installs.  If your system \Tcl/\Tk\ install is non-threaded,
+then you can either build a non-threaded version of \OOMMF, or else you
+can make an additional, threaded \Tcl/\Tk\ install, for example under
+your home directory or \fn{/usr/local}.  Be aware that if you have
+multiple \Tcl/\Tk\ installations on your system then you need to be
+careful to use the proper \fn{tclsh} whenever you build or launch
+\OOMMF.
+
+If you download \OOMMF\ with pre-built binaries, then it is imperative
+that you select the download that matches the major+minor release
+number and memory address width of the \Tcl/\Tk\ you want to run
+\OOMMF\ with.  On the other hand, if you build \OOMMF\ from source,
+then the \fn{tclsh} you use to run the build process is inspected to
+determine relevant information about the local \Tcl/\Tk\ environment.
+%If you are using one of the \OOMMF\ tested
+%\hyperrefhtml{platform+compiler combinations}{platform+compiler
+%  combinations (Sec.~}{)}{sec:install.requirements}, then once the
+%compiler is selected in the platform file the build scripts will
+%automatically adjust as necessary to produce a compatible
+%\OOMMF\ build.  Otherwise, some adjustment of the platform
+Some adjustment of the platform
+configuration file, as described in the next section, may be
+necessary.  Also, in many cases the compilers used to build 32-bit and
+64-bit executables are different---if you encounter build problems,
+double-check that the proper compiler is being used.
+
+All of the \OOMMF\ downloads containing pre-built binaries are built for
+use with thread-enabled \Tcl/\Tk.  You will need to build from source if
+you want a non-threaded \OOMMF.  The build scripts will detect if the
+\fn{tclsh} running the build procedure is non-threaded and will build
+\OOMMF\ appropriately.
+
+In all cases, use the platform configuration check described in the next
+section to verify the compatibility of your \Tcl/\Tk\ and \OOMMF\
+installs.
+
+\subsection{Check Your Platform Configuration}
+\index{platform!configuration}\label{sec:install.platformconfig}
+
+After downloading and unpacking the \OOMMF\ software distribution, all
+the \OOMMF\ software is contained in a subdirectory named \fn{oommf}.
+Start a command line interface (a shell on \Unix, or a console
+on \Windows), and change the
+working directory\index{working~directory} to the
+directory \fn{oommf}.
+Find the \Tcl\ shell program installed as part of your \Tcl/\Tk\
+installation.  In this manual we call the \Tcl\ shell program
+\fn{tclsh}, but the actual name of the executable depends
+on the release of \Tcl/\Tk\ and your platform type.  Consult
+your \Tcl/\Tk\ documentation.
+
+In the root directory of the \OOMMF\ distribution is a file
+named \fn{oommf.tcl}.  It is the
+\hyperrefhtml{bootstrap application}{bootstrap application (Ch.~}{)}{sec:cll}
+which is used to launch all \OOMMF\ software.  With the command line
+argument \cd{+platform},
+it will print a summary of your
+platform configuration when it is evaluated by \fn{tclsh}.
+This summary describes your platform type, your \Cplusplus\ compiler,
+and your \Tcl/\Tk\ installation.  As an example,
+here is the typical output on a \MacOSX\ 10.9 system:
+\begin{verbatim}
+$ tclsh oommf.tcl +platform
+<5426> oommf.tcl 1.2.0.6  info:
+OOMMF release 1.2.0.6, snapshot 2015.03.25
+Platform Name:    darwin
+Tcl name for OS:  Darwin 13.4.0
+C++ compiler:     /usr/bin/g++
+ Version string:  Apple LLVM version 6.0 (clang-600.0.57) (based on
+     LLVM 3.5svn) / Target: x86_64-apple-darwin13.4.0 / Thread model: posix
+Shell details ---
+ tclsh (running): /usr/bin/tclsh
+     (links to /usr/bin/tclsh8.5)
+     (links to /System/Library/Frameworks/Tcl.framework/Versions/8.5/tclsh8.5)
+                      --> Version 8.5.9, 64 bit, threaded
+ tclsh (OOMMF):   /usr/bin/tclsh8.5
+                   --> Version 8.5.9, 64 bit, threaded
+ filtersh:        /Users/xerxes/oommf/app/omfsh/darwin/filtersh
+                   --> Version 8.5.9, 64 bit, threaded
+ tclConfig.sh:    /System/Library/Frameworks/Tcl.framework/Versions/8.5/tclConfig.sh
+                   --> Version 8.5.9
+ wish (OOMMF):    /usr/bin/wish8.5
+                   --> Version 8.5.9, Tk 8.5.9, 64 bit, threaded
+ tkConfig.sh:     /System/Library/Frameworks/Tk.framework/Versions/8.5/tkConfig.sh
+                   --> Tk Version 8.5.9
+OOMMF threads:    Yes: Default thread count = 2
+OOMMF API index:  20150129
+Temp file directory: /var/folders/dy/srfj33512f51kc5knp_lph_r0000gp/T/
+\end{verbatim}
+
+If \cd{oommf.tcl +platform} doesn't print a summary similar to the
+above, it should instead print an error message describing why it can't.
+%For example, if your \Tcl\ installation is older than release 7.5, the
+%error message will report that fact.
+Follow any instructions provided
+and repeat until \cd{oommf.tcl +platform} successfully prints a summary
+of the platform configuration information.
+
+\index{platform!names|(}
+The first line of the example summary reports that \OOMMF\ recognizes
+the platform by the name \cd{darwin}.  \OOMMF\ software recognizes many
+of the more popular computing platforms, and assigns each a platform
+name.  The platform name is used by \OOMMF\ in index and configuration
+files and to name directories so that a single \OOMMF\ installation can
+support multiple platform types.  If \cd{oommf.tcl +platform} reports
+the platform name to be ``unknown'', then you will need to add some
+configuration files to help \OOMMF\ assign a name to your platform type,
+and associate with that name some of the key features of your computer.
+See the section on
+\hyperrefhtml{Managing \OOMMF\ platform names}
+{``Managing \OOMMF\ platform names'' (Sec.~}{)}{sec:install.platformnames}
+for further instructions.
+\index{platform!names|)}
+
+The second line reports the operating system version, which is mainly
+useful to \OOMMF\ developers when fielding bug reports.  The third line
+reports what \Cplusplus\ compiler will be used to build \OOMMF\ from its
+\Cplusplus\ source code.  If you downloaded an \OOMMF\ release with
+pre-compiled binaries for your platform, you may ignore this line.
+Otherwise, if this line reports ``none selected'', or if it reports a
+compiler other than the one you wish to use, then you will need to tell
+\OOMMF\ what compiler to use.  To do that, you must edit the appropriate
+configuration file for your platform.  Continuing the example above, one
+would edit the file
+\fn{config/platforms/darwin.tcl}\index{configuration~values}.  Editing
+instructions are contained within the file.  On other platforms the name
+\fn{darwin} in \fn{config/platforms/darwin.tcl} should be replaced with
+the platform name \OOMMF\ reports for your platform.  For example, on a
+32-bit Windows machine using an x86 processor, the corresponding
+configuration file is \fn{config/platforms/wintel.tcl}.
+
+\index{installation!Tcl/Tk|(}
+The next group of lines describe the \Tcl\ configuration \OOMMF\ finds
+on your platform.  The first couple of lines, ``tclsh (running)'',
+describe the \Tcl\ shell running the oommf.tcl script.  After that, the
+``tclsh (\OOMMF)'' subgroup describes the \Tcl\ shell that \OOMMF\ will
+launch when it needs to run \Tcl\ scripts.  If the \OOMMF\ binaries
+have been built, then there will also be a \cd{filtersh} subgroup, which
+describes the augmented \Tcl\ shell used to run many of the
+\OOMMF\ support scripts.  All of these shells should report the same
+version, bitness, and threading information.  If \OOMMF\ can't find
+\cd{tclsh}, or if it finds the wrong one, you can correct this by
+setting the environment variable
+OOMMF\_TCLSH\index{environment~variables!OOMMF\_TCLSH} to the absolute
+location of \cd{tclsh}.  (For information about setting environment
+variables, see your operating system documentation.)
+
+Following the \Tcl\ shell information, the \cd{tclConfig.sh} lines
+report the name of the configuration file installed as part of \Tcl, if
+any.  Conventional \Tcl\ installations on Unix systems and within the
+Cygwin environment\index{platform!Windows!Cygwin~environment} on
+\Windows\ have such a file, usually named \fn{tclConfig.sh}.  The
+\Tcl\ configuration file records details about how \Tcl\ was built and
+where it was installed.  On \Windows\ platforms, this information is
+recorded in the
+\Windows\ registry\index{platform!Windows!no~Tcl~configuration~file}, so
+it is normal to have \cd{oommf.tcl +platform} report ``none found''.  If
+\cd{oommf.tcl +platform} reports ``none found'', but you know that an
+appropriate \Tcl\ configuration file is present on your system, you can
+tell \OOMMF\ where to find the file by setting the environment variable
+OOMMF\_TCL\_CONFIG\index{environment~variables!OOMMF\_TCL\_CONFIG} to
+its absolute filename.  In unusual circumstances, \OOMMF\ may find a
+\Tcl\ configuration file which doesn't correctly describe your
+\Tcl\ installation.  In that case, use the environment variable
+OOMMF\_TCL\_CONFIG to instruct \OOMMF\ to use a different file that you
+specify, and, if necessary, edit that file to include a correct
+description of your \Tcl\ installation.
+
+Next, the \cd{oommf.tcl +platform} reports similar information about the
+\cd{wish} and \Tk\ configuration.  The environment variables
+\cd{OOMMF\_TK\_CONFIG}\index{environment~variables!OOMMF\_TK\_CONFIG}
+and \cd{OOMMF\_WISH}\index{environment~variables!OOMMF\_WISH} may be
+used to tell \OOMMF\ where to find the \Tk\ configuration file and the
+\fn{wish} program, respectively.
+
+\index{parallelization|(}
+Following the \Tk\ information are some lines reporting ``thread'' build
+and run status. Threads are used by \OOMMF\ to implement parallelism in
+the Oxs (\cd{oxsii} and \cd{boxsi}) 3D solvers on
+multi-processor/multi-core shared memory machines.  In order to build or
+run a parallel version of OOMMF, you must have a thread-enabled version
+of \Tcl.  The \Tcl\ thread status is indicated on the first thread
+status line.  If \Tcl\ is thread enabled, then the default \OOMMF\ build
+process will create a threaded version of \OOMMF.  You can override this
+behavior if you wish to build a non-parallel version of \OOMMF\ by
+editing the
+\cd{oommf\_threads}\index{configuration~values!oommf\_threads} value in
+the \fn{config/platforms/} file for your platform.
+
+If \Tcl\ and \OOMMF\ threads are enabled, then the default number of
+threads run by the Oxs solvers is also reported.  (This value may vary
+between machines, depending on the number of processors in the
+machine.)  You can change this by setting (in order of increasing
+precedence) the
+\cd{oommf\_thread\_count}\index{configuration~values!oommf\_thread\_count}
+value in the installation-wide \fn{config/options} file, the
+\cd{thread\_count}\index{configuration~values!thread\_count} value in
+the \fn{config/platforms/} file for your platform, via the environment
+variable
+\cd{OOMMF\_THREADS}\index{environment~variables!OOMMF\_THREADS}, or by
+the \cd{oxsii}/\cd{boxsi} command line option \cd{-threads}.
+
+By default, \OOMMF\ sets no upper limit on the number of threads you
+may run in \cd{oxsii} or \cd{boxsi}.  However, performance is degraded
+if you run more threads than available cpu cores.  To protect against
+this, or to limit resource use on a shared machine, you may wish to
+set a hard limit on the maximum number of threads per \cd{oxsii} or
+\cd{boxsi} instance.  This can be done by setting (in order of
+increasing precedence) the environment variable
+\cd{OOMMF\_THREADLIMIT}\index{environment~variables!OOMMF\_THREADLIMIT},
+the \cd{thread\_limit}\index{configuration~values!thread\_limit} value
+in the \fn{config/platforms/} file for your platform, or the
+\cd{oommf\_thread\_limit}\index{configuration~values!oommf\_thread\_limit}
+value in the \fn{config/options} file.  (Note the precedence order is
+reversed compared to that for the default thread count.)  If a limit
+is set then that value is displayed in the threads line of the
+\cd{oommf.tcl +platform} output.
+
+If NUMA\index{NUMA} support is provided on your platform (see
+\hyperrefhtml{below}{``Parallelization,'' Sec.~}{
+  below}{sec:install.parallel}), then the following \cd{oommf.tcl
+  +platform} output line will indicate whether or not the build process
+will create NUMA-aware Oxs solvers.\index{parallelization|)}
+
+After the thread and NUMA information, \cd{oommf.tcl +platform}
+reports the directory that \OOMMF\ will use to write temporary
+files\index{temporary~files}.  This directory is used, for example, to
+transfer magnetization data from the micromagnetic solvers to the
+\app{mmDisp} display module.  You must have write access to this
+directory.  It needs to have enough space to manage the dataflows of
+your simulations.  It is also beneficial if this directory is local to
+the processors performing the calculations.  If you don't like the
+\OOMMF\ default, you may change it via the
+\cd{path\_directory\_temporary}\index{configuration~values!path\_directory\_temporary}
+setting in the \fn{config/platforms/} file for your platform.  Or you
+can set the environment variable
+\cd{OOMMF\_TEMP}\index{environment~variables!OOMMF\_TEMP}, which will
+override all other settings.
+
+If any environment variables relevant to \OOMMF\ are set, then
+\cd{oommf.tcl +platform} will report these next, followed finally by any
+warnings about possible problems with your \Tcl/\Tk\ installation, such
+as if you are missing important header files.
+
+If \cd{oommf.tcl +platform} indicates problems with your \Tcl/\Tk\
+installation,
+it may be easiest to re-install \Tcl/\Tk\, taking care to perform a
+conventional installation.  \OOMMF\ deals best with conventional
+\Tcl/\Tk\ installations.  If you do not have the power to re-install
+an existing broken \Tcl/\Tk\ installation (perhaps you are not
+the sysadmin of your machine), you might still install your own
+copy of \Tcl/\Tk\ in your own user space.  In that case, if your
+private \Tcl/\Tk\ installation makes use of shared libraries,
+take care that you do whatever is necessary on your platform to
+be sure that your private \fn{tclsh} and \fn{wish}
+find and use your private
+shared libraries instead of those from the system \Tcl/\Tk\ installation.
+This might involve setting an environment variable (such as
+LD\_LIBRARY\_PATH\index{environment~variables!LD\_LIBRARY\_PATH} on
+\Unix\, or PATH\index{environment~variables!LD\_LIBRARY\_PATH} on
+\Windows).
+If you use a private \Tcl/\Tk\ installation, you also want to be sure
+that there are no environment variables like
+TCL\_LIBRARY\index{environment~variables!TCL\_LIBRARY}
+or TK\_LIBRARY\index{environment~variables!TK\_LIBRARY}
+that still refer to the system \Tcl/\Tk\ installation.
+\index{installation!Tcl/Tk|)}
+
+\subsubsection{Additional Configuration Issues on \Windows}
+\index{platform!Windows!configuration|(}
+A few other configurations should be checked on \Windows\ platforms.
+\index{platform!Windows!file~path~separator|(}
+First, note that absolute filenames on \Windows\ makes use of the
+backslash (\bs) to separate directory names.  On \Unix\ and
+within \Tcl\ the forward slash (\fs) is used to separate directory
+names in an absolute filename.  In this manual we usually use the
+\Tcl\ convention of forward slash as separator.  In portions of the
+manual pertaining only to MS \Windows\ we use the backslash as
+separator.  There may be instructions in this manual which do not
+work exactly as written on \Windows\ platforms.  You may need to
+replace forward slashes with backward slashes in pathnames when
+working on \Windows.
+\index{platform!Windows!file~path~separator|)}
+
+\index{platform!Windows!hosts~file|(}
+\OOMMF\ software needs networking support that recognizes
+the host name \cd{localhost}.  It may be necessary
+to edit a file which records that \cd{localhost} is a synonym
+for the loopback interface (127.0.0.1).  If a file named \fn{hosts}
+exists in your system area (for example, \fn{C:\bs Windows\bs hosts}),
+be sure it includes an entry mapping 127.0.0.1 to \cd{localhost}.
+If no \fn{hosts} file exists, but a \fn{hosts.sam} file exists,
+make a copy of \fn{hosts.sam} with the name \fn{hosts}, and edit
+the copy to have the \fn{localhost} entry.
+\index{platform!Windows!hosts~file|)}
+
+The directory that holds the \fn{tclsh} and \fn{wish} programs also
+holds several {\fn{*.dll}} files that \OOMMF\ software needs to find to
+run properly.  Normally when the \hyperrefhtml{\OOMMF\ bootstrap
+  application}{\OOMMF\ bootstrap application (Ch.~}{)}{sec:cll} or
+\hyperrefhtml{{\bf mmLaunch}}{{\bf mmLaunch} (Ch.~}{)}{sec:mmlaunch} is
+used to launch \OOMMF\ programs, they take care of making sure the
+necessary {\fn{*.dll}} files can be found.  As an additional measure,
+you might want to add the directory which holds the \fn{tclsh} and
+\fn{wish} programs to the list of directories stored in the
+PATH\index{environment~variables!PATH} environment variable.  All the
+directories in the PATH are searched for {\fn{*.dll}} files needed when
+starting an executable.  \index{platform!Windows!configuration|)}
+
+\subsection{Compiling and Linking}\label{sec:install.compile}
+
+If you downloaded a distribution with pre-compiled executables, you may
+skip this section.
+
+When building \OOMMF\ software from source code, be sure the
+\Cplusplus\ compiler reported by \cd{oommf.tcl +platform} is properly
+configured.  In particular, if you are running on a \Windows\ system,
+please read carefully the notes in \html{the} \hyperrefhtml{Advanced
+  Installation}{Advanced Installation, Sec.~}{,}{sec:install.windows}
+\html{section} pertaining to your compiler.
+
+The compiling and linking of the \Cplusplus\ portions of
+\OOMMF\ software are guided by the application
+\hyperrefhtml{pimake}{pimake (Sec.~}{)}{sec:pimake}
+\index{application!pimake}
+(``Platform Independent Make'') which
+is distributed as part of the \OOMMF\ release.
+To begin building \OOMMF\ software with \fn{pimake}, first change
+your working directory\index{working~directory}
+to the root directory of the \OOMMF\ distribution:
+\begin{verbatim}
+cd .../path/to/oommf
+\end{verbatim}
+
+If you unpacked the new \OOMMF\ release into a directory \fn{oommf}
+which contained an earlier \OOMMF\ release,
+use \fn{pimake} to build the target \cd{upgrade}
+to clear away any source code files which were
+in a former distribution but are not part of the latest distribution:
+\begin{verbatim}
+tclsh oommf.tcl pimake upgrade
+\end{verbatim}
+
+Next, build the target \cd{distclean} to clear away any old executables
+and object files which are left behind from the compilation of the
+previous distribution:
+\begin{verbatim}
+tclsh oommf.tcl pimake distclean
+\end{verbatim}
+
+Next, to build all the \OOMMF\ software, run \fn{pimake} without
+specifying a target:
+\begin{verbatim}
+tclsh oommf.tcl pimake
+\end{verbatim}
+On some platforms, you cannot successfully compile \OOMMF\ software if
+there are \OOMMF\ programs running.  Check that all \OOMMF\ programs
+have terminated (including those in the background) before trying to
+compile and link \OOMMF.
+
+When \fn{pimake} calls on a compiler or other software development
+utility, the command line is printed, so that you may monitor the build
+process.
+Assuming a proper configuration for your platform, \fn{pimake} should be
+able to compile and link all the \OOMMF\ software without error.  If
+\fn{pimake} reports errors, please first consult
+\hyperrefhtml{Troubleshooting}{Troubleshooting (Ch.~}{)}{sec:trouble}
+to see if a fix is already documented.
+If not, please send both the {\em complete} output
+from \fn{pimake} and the output from \cd{oommf.tcl +platform}
+to the \OOMMF\ developers when you e-mail to ask for help.
+
+\subsection{Installing}\label{sec:install.installing}
+% Note: LaTeXML uses \label value to set file names.
+The current \OOMMF\ release does not support an installation procedure.
+For now, simply run the executables from the directories in which they
+were unpacked/built.
+
+\subsection{Using \OOMMF\ Software}\label{sec:install.using}
+% Note: LaTeXML uses \label value to set file names.
+To start using \OOMMF\ software, run the
+\hyperrefhtml{\OOMMF\ bootstrap application}{\OOMMF\ bootstrap
+application (Ch.~}{)}{sec:cll}. This may be launched from the command
+line interface:
+\begin{verbatim}
+tclsh oommf.tcl
+\end{verbatim}
+
+If you prefer, you may launch the \OOMMF\ bootstrap application
+\fn{oommf.tcl} using whatever graphical ``point and click''
+interface your operating system provides.  By default, the \OOMMF\
+bootstrap application will start up a copy of the \OOMMF\ application
+\hyperrefhtml{\app{mmLaunch}}{\app{mmLaunch} (Ch.~}{)}{sec:mmlaunch} in a
+new window.
+
+If you publish material created with the aid of \OOMMF, please refer to
+\hyperrefhtml{Credits}{Credits (Ch.~}{)}{sec:credits}
+for citation information.
+
+
+\subsection{Reporting Problems}\label{sec:install.reporting}
+% Note: LaTeXML uses \label value to set file names.
+If you encounter problems when installing or using \OOMMF, please report
+them to the \OOMMF\ developers.  The \cd{oommf.tcl +platform} command
+has been designed in large part to help \OOMMF\ developers debug
+installation problems, so \textbf{PLEASE} be sure to include the
+complete output from \cd{oommf.tcl~+platform} in your report.  See also
+the section on
+\hyperrefhtml{troubleshooting}{troubleshooting (Ch.~}{)}{sec:trouble}
+for additional instructions.
+
+\section{Advanced Installation}\label{sec:install.advanced}
+
+The following sections provide instructions for some additional
+installation options.
+
+\subsection{Reducing Disk Space Usage}\label{sec:install.reducedisk}
+
+\index{requirement!disk~space|(}
+To delete the intermediate files created when building the \OOMMF\
+software from source code, use
+\hyperrefhtml{pimake}{pimake (Sec.~}{)}{sec:pimake}
+to build the target
+\cd{objclean} in the root directory of the \OOMMF\ distribution.
+\begin{verbatim}
+tclsh oommf.tcl pimake objclean
+\end{verbatim}
+Running your platform \fn{strip} utility on the \OOMMF\ executable files
+should also reduce their size somewhat.
+\index{requirement!disk~space|)}
+
+\subsection{Local Customizations}\label{sec:install.custom}
+\index{customize}
+\OOMMF\ software supports local customization of some of its
+features. The files controlling these options are
+\fn{config/options.tcl}\index{options.tcl} and
+\fn{config/platforms/<platform>.tcl},\index{platform.tcl} where
+``\fn{<platform>}'' is the identifier for the platform, e.g.,
+\fn{windows-x86\_64} for \Windows, \fn{linux-x86\_64} for \Linux, and
+\fn{darwin} for \MacOSX. Although you may edit these files directly, it
+is better to create a subdirectory named \fn{local} and
+create a file with the same name containing your changes. (Separating
+your changes from the distributed versions of these files makes it
+easier to port your changes to new versions of \OOMMF.)  For example, to
+change the settings in the \fn{options.tcl} file, create the file
+\fn{config/local/options.tcl}. To modify the platform file on \Windows,
+create the file \fn{config/platforms/local/windows-x86\_64.tcl}.
+
+The \cd{options.tcl} and platform files are \Tcl\ script files, and you
+may use any of the standard \Tcl\ commands and constructs inside
+them. There are also \OOMMF-specific commands available in these files,
+in particular \cd{Oc\_Option} for \cd{options.tcl}, and \cd{\$config
+  SetValue} for platform files.
+
+The \fn{options.tcl} file controls settings which are platform agnostic.
+For example, this file sets the default network port for the
+\hyperrefhtml{host service directory application}{host service
+  directory application (Ch.~}{)}{sec:arch}, the location of
+\hyperrefhtml{\app{Oxs}}{\app{Oxs} log files (Ch.~}{),}{sec:oxs}
+\HTMLoutput{log files,} and the width of curves in
+\hyperrefhtml{\app{mmGraph}}{\app{mmGraph} (Ch.~}{)}{sec:mmgraph}.
+Editing instructions are provided in \fn{options.tcl}. As an example,
+the setting
+\begin{verbatim}
+Oc_Option Add mmGraph Ow_GraphWin default_curve_width 1
+\end{verbatim}
+in \fn{options.tcl} can be overridden in \fn{local/options.tcl} with
+\begin{verbatim}
+Oc_Option Add mmGraph Ow_GraphWin default_curve_width 2
+\end{verbatim}
+if wider lines are desired. The \fn{options.tcl} file also controls some
+build and optimization controls, as discussed
+\HTMLoutput{in the }
+\hyperrefhtml{next section}{below (Sec.~}{)}{sec:install.optimize}.
+
+The platform configuration files control settings that are platform
+dependent, such as the location for temporary files, compiler selection,
+and compiler and linker search paths. These files contain a block of
+code demarcated by the string \verb+LOCAL CONFIGURATION+ that lists
+end-user configuration options. These controls are all commented out
+(i.e., deactivated by a leading \verb+#+ character, which is the comment
+marker in \Tcl), so you can copy this entire block into your
+\fn{local/<platform>.tcl} file and uncomment only the options you want
+to change. For example, if you are using
+\htmladdnormallinkfoot{MacPorts}{https://www.macports.org}
+on \MacOSX, then you
+may want to edit your \fn{config/platforms/local/darwin.tcl} file
+to have the lines
+\begin{verbatim}
+## EXTERNAL PACKAGE SUPPORT:
+## Extra include directories for compiling:
+$config SetValue program_compiler_extra_include_dirs /opt/local/include
+#
+## Extra directories to search for libraries.
+$config SetValue program_linker_extra_lib_dirs /opt/local/lib
+\end{verbatim}
+to allow the compiler and linker to search in the MacPorts default
+install area.
+
+There are a number of environment
+variables\index{environment~variables!customization} that can be set to
+override the values in the above configuration files, including
+\begin{description}
+\item[OOMMF\_CPP:] Two item list specifying the \Cplusplus\ compiler and
+  the option to compile only (no link); e.g., for a Bourne compatible shell
+\begin{verbatim}
+  export OOMMF_CPP=g++ -c
+\end{verbatim}
+selects the GNU \Cplusplus\ compiler. To select the Visual C++ compiler
+at the \Windows\ command prompt, use
+\begin{verbatim}
+  set OOMMF_CPP=cl /c
+\end{verbatim}
+Overrides the \fn{<platform>.tcl} \cd{program\_compiler\_c++\_override}
+setting.
+\item[OOMMF\_HOSTPORT:] Host server listen port. Overrides the
+  \fn{options.tcl} ``\cd{Net\_Host port}'' value.
+\item[OOMMF\_OUTDIR:] Output file directory for \app{Oxs} runs;
+  overrides default which is the directory holding the run \fn{.mif}
+  simulation specification file.
+\item[OOMMF\_OXSLOGDIR:] Directory for \app{Oxs} log files. Overrides
+  \fn{options.tcl} setting ``\cd{OxsLogs directory}''.
+\item[OOMMF\_TEMP:] Directory for temporary files. Overrides auto-selection.
+\item[OOMMF\_THREADS:] Default number of execution threads for \app{Oxs}
+  runs. Overrides \fn{<platform>.tcl} \cd{thread\_count} setting.
+\end{description}
+Be aware that environment variable settings hold only for applications
+launched from the given shell instance, unless the value is set in the
+shell start-up configuration.
+
+Where applicable, command line options override both configuration file
+and environment variable settings. For example, \app{oxsii} and
+\app{boxsi} support the \cd{-threads} option that specifies the number
+of execution threads.
+
+The \OOMMF\ installation can also be customized by the installation of
+third party and experimental extensions to the \hyperrefhtml{\OOMMF\
+  eXtensible Solver (Oxs)}{\OOMMF\ eXtensible Solver (Oxs)
+  (Ch.~}{)}{sec:oxs}. These are maintained using the
+\hyperrefhtml{\app{oxspkg}}{\app{oxspkg} (Sec.~}{)}{sec:oxspkg} package
+  management tool.
+
+
+\subsection{Optimization}\label{sec:install.optimize}\index{optimization}
+In the interest of successful compilation of a usable software package
+``out of the box,'' the default configuration for \OOMMF\ does not
+stretch to maximize optimization.  However, the configuration files
+\fn{config/options.tcl} and \fn{config/platforms/<platform>.tcl} include
+optimization controls.  In the former,
+\begin{verbatim}
+Oc_Option Add * Platform optlevel 2
+\end{verbatim}
+selects a relatively high but robust level of optimization, equivalent
+typically to a compiler option of ``-O2'' or similar. You may
+try increasing \cd{optlevel} to 3. If you are familiar with your
+compiler's command line options, then for finer control you can
+experiment with the \fn{<platform>.tcl} file options
+\begin{duplex}
+\item \verb!program_compiler_c++_remove_flags!
+\item[and]\html{\\}
+\item \verb!program_compiler_c++_add_flags!
+\end{duplex}
+The remove flags control selects options to be removed from the compiler
+command line. The setting value should be a \Tcl\ list of regular
+expressions.  (Refer to the
+\htmladdnormallinkfoot{\Tcl\ documentation}{https://www.tcl-lang.org/man/}
+on the regexp command for details.) The add flags value is a list of
+values to append to the compile command (applied after the remove flags
+request, if any). An extended discussion of these controls can be found
+in the ``Configuration Files'' section of the
+\htmladdnormallinkfoot{\textit{\OOMMF\ Programming
+    Manual}}{https://math.nist.gov/oommf/doc/}.
+
+\subsection{Parallelization}%
+\label{sec:install.parallel}\index{parallelization|(}
+The \OOMMF\ Oxs 3D solvers (\cd{oxsii} and \cd{boxsi}) can be built
+thread-enabled to allow parallel processing on
+multi-processor/multi-core machines.  In order to build and run a
+parallel version of \OOMMF, you must have a thread-enabled version of
+\Tcl.  Most standard binary releases of \Tcl\ today are thread-enabled,
+so \OOMMF\ releases that include pre-built executables are built
+thread-enabled.  If you build \OOMMF\ from source, then by default
+\OOMMF\ will be built thread-enabled if your \Tcl\ is thread-enabled.
+As explained earlier, you can check thread build status with the
+\cd{tclsh oommf.tcl +platform} command.  If you want to force a
+non-threaded build of \OOMMF, then edit the \fn{config/platforms/} file
+for your platform.  In the section labeled \cd{LOCAL CONFIGURATION}, you
+will find a line that looks like
+\begin{verbatim}
+# $config SetValue oommf_threads 0
+\end{verbatim}
+Uncomment this line (i.e., remove the leading `\verb+#+' character) to
+force a non-threaded build.  Then run
+\begin{verbatim}
+tclsh oommf.tcl pimake distclean
+tclsh oommf.tcl pimake
+\end{verbatim}
+from the \OOMMF\ root directory to create a fresh build.
+
+You can use the \cd{tclsh oommf.tcl +platform} command to see the
+default number of compute threads that will be run by the Oxs 3D solver
+programs \cd{oxsii} and \cd{boxsi}.  You can modify the default as
+explained in the \hyperrefhtml{Check Your Platform
+  Configuration}{Platform Configuration
+  (Sec.~}{)}{sec:install.platformconfig} and \hyperrefhtml{Local
+  Customizations}{Local Customizations (Sec.~}{)}{sec:install.custom}
+sections, or you can override the default at run time via the command
+line option \cd{-threads} to \cd{oxsii} and \cd{boxsi}.
+
+\index{NUMA|(}Some multi-processor machines have a non-uniform memory
+architecture (NUMA), which means that although each processor can access
+all of system memory, some parts of memory can be accessed faster than
+others.  Typically this is accomplished by dividing the system memory
+and processors into ``nodes.''  Memory accesses within a node are faster
+than accesses between nodes, and depending on the architecture access
+latency and bandwidth may be different between different node pairs.
+Examples of machines with NUMA include some multi-processor AMD Opteron
+and Intel Xeon boxes.
+
+Computer programs such as \OOMMF\ can run on NUMA machines without
+making any special allowances for the memory architecture.  However, a
+program that is written to take advantage of the faster local
+(intra-node) memory accesses can sometimes run significantly faster.
+\OOMMF\ contains NUMA-aware code, but this code is highly operating
+system specific.  At present, \OOMMF\ can be built with NUMA support
+only on Linux (32- and 64-bit) systems.  To do this, you must install
+the operating system NUMA support packages ``numactl'' and
+``numactl-devel''.  The names may vary somewhat between Linux
+distributions, but the first typically includes the executable
+\fn{numactl} and the second includes the header file \fn{numa.h}.  Once
+the numactl package is installed, you can run the command
+\begin{verbatim}
+numactl --hardware
+\end{verbatim}
+to get an overview of the memory architecture on your machine.  If this
+shows you have only one node, then there is no advantage to making a
+NUMA-aware build of \OOMMF.
+
+The next step is to edit the \fn{config/platforms} for your platform.
+For example, on a 64-bit Linux box this file is
+\fn{config/platforms/linux-x86\_64.tcl}.
+In the section labeled \cd{LOCAL CONFIGURATION}, find the line
+\begin{verbatim}
+# $config SetValue use_numa 1
+\end{verbatim}
+Edit this to remove the leading `\verb+#+' character.  Alternatively
+(and, actually, preferably), create a \fn{local} subdirectory and make a
+local configuration file with the same platform name; e.g.,
+\fn{config/platforms/local/linux-x86\_64.tcl} on a 64-bit Linux machine.  Add
+the line
+\begin{verbatim}
+$config SetValue use_numa 1
+\end{verbatim}
+to this file.  (The advantage of using a \fn{config/platforms/local}
+file is that you can make changes without modifying the original \OOMMF\
+source code, which makes it easier to port your local changes to future
+releases of \OOMMF.)  If this is done correctly, then the command
+`\cd{tclsh oommf.tcl +platform}' will show that NUMA support is enabled.
+Then simply run `\cd{tclsh oommf.tcl pimake distclean}' and
+`\cd{tclsh oommf.tcl pimake}' from the \OOMMF\ root directory to build a
+NUMA-aware version of \OOMMF.
+
+To activate the NUMA-aware code, you must specify the \cd{-numanodes}
+option on the \cd{oxsii}/\cd{boxsi} command line, or set the the
+environment variable
+\cd{OOMMF\_NUMANODES}\index{environment~variables!OOMMF\_NUMANODES}.
+Check the \hyperrefhtml{Oxs documention}{Oxs documentation
+(Ch.~}{)}{sec:oxs} for details.
+\index{NUMA|)}\index{parallelization|)}
+
+\subsection{Managing \OOMMF\ Platform Names}\label{sec:install.platformnames}
+\index{platform!names|(}
+
+\OOMMF\ software classifies computing platforms into different types
+using the scripts in the directory \fn{config/names} relative to the
+root directory of the \OOMMF\ distribution.
+Each type of computing platform is assigned a unique name.
+These names are used as directory names
+and in index and configuration files so that a single
+\OOMMF\ installation may contain platform-dependent sections for many
+different types of computing platforms.
+
+To learn what name \OOMMF\ software uses to refer to your computing
+platform, run
+\begin{verbatim}
+tclsh oommf.tcl +platform
+\end{verbatim}
+in the \OOMMF\ root directory.
+
+\subsubsection{Changing the name \OOMMF\ assigns to your platform}
+First, use
+\hyperrefhtml{pimake}{pimake (Sec.~}{)}{sec:pimake}
+to build the target \cd{distclean} to
+clear away any compiled executables built using the old platform
+name.
+\begin{verbatim}
+tclsh oommf.tcl pimake distclean
+\end{verbatim}
+Then, to change the name \OOMMF\ software uses to describe your platform from
+\cd{foo} to \cd{bar}, simply rename the file
+\begin{quote}
+\fn{config/names/foo.tcl}
+\hspace{1em} to \hspace{1em}
+\fn{config/names/bar.tcl}
+\end{quote}
+and
+\begin{quote}
+\fn{config/platforms/foo.tcl}
+\hspace{1em} to \hspace{1em}
+\fn{config/platforms/bar.tcl}.
+\end{quote}
+After renaming your platform type, you should recompile your executables
+using the new platform name.
+
+\subsubsection{Adding a new platform type}
+If \cd{oommf.tcl +platform} reports the platform name
+\cd{unknown}, then none of the scripts in \fn{config/names/}
+recognizes your platform type.  As an example, to add the platform
+name \cd{foo} to \OOMMF's vocabulary of platform names, create the
+file \fn{config/names/foo.tcl}.  The simplest way to proceed is to
+copy an existing file in the directory \fn{config/names} and edit it
+to recognize your platform.
+
+The files in \fn{config/names} include \Tcl\ code like this:
+
+\begin{verbatim}
+  Oc_Config New _ \
+    [string tolower [file rootname [file tail [info script]]]] {
+      # In this block place the body of a Tcl proc which returns 1
+      # if the machine on which the proc is executed is of the
+      # platform type identified by this file, and which returns 0
+      # otherwise.
+      #
+      # The usual Tcl language mechanism for discovering details
+      # about the machine on which the proc is running is to
+      # consult the global Tcl variable 'tcl_platform'.  See the
+      # existing files for examples, or contact the OOMMF
+      # developers for further assistance.
+  }
+\end{verbatim}
+
+After creating the new platform name file \fn{config/names/foo.tcl}, you
+also need to create a new platform file \fn{config/platforms/foo.tcl}.
+A reasonable starting point is to copy the file
+\fn{config/platforms/unknown.tcl} for editing.  Contact the \OOMMF\
+developers for assistance.
+
+Please consider contributing your new platform recognition and
+configuration files to the \OOMMF\ developers for inclusion in
+future releases of \OOMMF\ software.
+
+\subsubsection{Resolving platform name conflicts}
+If the script \cd{oommf.tcl +platform} reports ``Multiple platform names are
+compatible with your computer'', then there are multiple files in the
+directory \fn{config/names/} that return 1 when run on your computer.
+For each compatible platform name reported, edit the corresponding
+file in \fn{config/names/} so that only one of them returns 1.
+Experimenting using \fn{tclsh} to probe the \Tcl\ variable
+\cd{tcl\_platform} should assist you in this task.  If that fails, you
+can explicitly assign a platform type corresponding to your computing
+platform by matching its hostname.  For example, if your machine's
+host name is {\tt foo.bar.net}:
+\begin{verbatim}
+  Oc_Config New _ \
+    [string tolower [file rootname [file tail [info script]]]] {
+      if {[string match foo.bar.net [info hostname]]} {
+          return 1
+      }
+      # Continue with other tests...
+  }
+\end{verbatim}
+
+Contact the \OOMMF\ developers if you need further assistance.
+\index{platform!names|)}
+
+\section{Platform Specific Installation Issues}\label{sec:install.platformissues}
+The installation procedure discussed in the previous sections applies to
+all platforms (\Unix, \Windows, \MacOSX).  There are, however, some
+details which pertain only to a particular platform.  These issues are
+discussed below.
+
+\index{platform!Unix!configuration|(}
+\subsection{\Unix\ Configuration}\label{sec:install.unixconfig}
+% Note: LaTeXML uses \label value to set file names.
+\subsubsection{Missing \Tcl/\Tk\ files}
+The basic installation procedure should be sufficient to install \OOMMF\
+on most \Unix\ systems.  Sometimes, however, the build will fail due to
+missing \Tcl\ header files (\fn{tcl.h}, \fn{tk.h}) or libraries (e.g.,
+\fn{libtcl.so}, \fn{libtk.so}).  This problem can usually be solved by
+installing a ``development'' version of \Tcl/\Tk, which may be found on
+the operating system installation disks, or may be available from the
+system vendor.  There are also binary releases of \Tcl/\Tk\ for a number
+of systems available from ActiveState, under the name
+\htmladdnormallinkfoot{ActiveTcl}{https://www.activestate.com/products/tcl/}.
+Alternatively, one may download the sources for \Tcl\ and \Tk\ from the
+\htmladdnormallinkfoot{Tcl Developer
+Xchange}{http://purl.org/tcl/home/}, and build and install \Tcl/\Tk\
+from source.  The \Tcl/\Tk\ build follows the usual \Unix\
+\fn{configure}, \fn{make}, \fn{make install} build convention.
+
+\subsubsection{Compiler Optimization Options}
+On most systems, \OOMMF\ builds by default with relatively unaggressive
+compiler optimization options.  As discussed earlier
+(\html{under }\hyperrefhtml{Optimization)}{``Optimization,''
+Sec.~}{)}{sec:install.optimize}, you may edit the appropriate
+\fn{oommf/config/platforms/} file to change the default compilation options.
+However, on some common systems (e.g., Linux, some BSD variants) \OOMMF\
+will try to deduce the hardware architecture (i.e., the CPU subtype,
+such as Pentium 3 vs. Pentium 4) and apply architecture-specific options
+to the compile commands.  This is probably what you want if \OOMMF\ is
+to be run only on the system on which it was built, or if it is run on a
+homogeneous cluster.  If, instead, you intend to run \OOMMF\ on a
+heterogeneous cluster you may need to restrict the compiler options to
+those supported across your target machines.  In that case, open the
+appropriate configuration file in the \fn{oommf/config/platforms/}
+directory, and look for the lines
+\begin{verbatim}
+    # You can override the GuessCPU results by directly setting or
+    # unsetting the cpuopts variable, e.g.,
+    #
+    #    set cpuopts [list -march=skylake]
+    # or
+    #    unset cpuopts
+    #
+\end{verbatim}
+Uncomment either the ``unset cpuopts'' line to make a generic build, or
+else edit the ``set cpuopts'' line to an appropriate common-denominator
+architecture and uncomment that line.
+
+In a similar vein, some compilers support a ``-fast'' switch, which
+usually creates an architecture-specific executable.  The same
+considerations apply in this case.
+
+An advanced alternative would be to define separate \OOMMF\
+``platforms'' for each CPU subtype in your cluster.  At a minimum, this
+would involve creating separate platform name files in
+\fn{oommf/config/names/} for each subtype, and then making copies of the
+appropriate \fn{oommf/config/platforms} file for each new platform.  The
+platform name files would have to be written so as to reliably detect
+the CPU subtype on each machine.  See \hyperrefhtml{``Managing \OOMMF\
+platform names''} {``Managing \OOMMF\ platform names''
+(Sec.~}{)}{sec:install.platformnames} for details on creating platform name
+files.  \index{platform!Unix!configuration|)}
+
+\subsubsection{Portland Group pgCC compiler on Linux}
+The platform build scripts for Linux,
+\fn{oommf/config/platforms/lintel.tcl} (32-bit) and
+\fn{oommf/config/platforms/linux-x86\_64.tcl} (64-bit) contain sections
+supporting the Portland Group pgCC compiler.  Non-threaded builds of
+OOMMF using this compiler run fine, but threaded builds segfault when
+running \hyperrefhtml{\fn{Oxsii}/\fn{Boxsi}} {\fn{Oxsii}/\fn{Boxsi}
+ (Ch.~}{)}{sec:oxs}.  The source of this problem is not known at this
+time.
+
+
+\subsection{\MacOSX\ Configuration}\label{sec:install.macosx}
+\index{platform!macOS!configuration|(}
+The build procedure for \MacOSX\ is the same as for \Unix.  The
+platform name is ``darwin''.  If the \hyperrefhtml{platform
+configuration check}{platform configuration check
+(Sec.~}{)}{sec:install.platformconfig} does not find a \Cplusplus\ compiler,
+then you will have to install one.  One option is the Xcode command line
+developer tools provided by Apple.  You can install these from a
+Terminal window via the command
+\begin{verbatim}
+xcode-select --install
+\end{verbatim}
+You should run this command even if you install the full Xcode IDE.
+Refer to your system documentation for details.
+\index{platform!macOS!configuration|)}
+
+\index{platform!Windows!configuration|(}
+\subsection{Microsoft \Windows\ Options}\label{sec:install.windows}
+
+This section lists installation options for Microsoft \Windows.
+
+\subsubsection{Using Microsoft Visual \Cplusplus}
+\index{platform!Windows!Microsoft~Visual~C++}
+If you are building \OOMMF\ software from source using the Microsoft
+Visual \Cplusplus\ command line compiler, \fn{cl.exe}, it is necessary to set up
+the path and some environment variables before running the compiler.
+There is a batch file distributed with Visual \Cplusplus\ that you can run to do
+this.  The name of the file varies between Visual \Cplusplus\ releases, but for
+example may be \fn{vcvarsall.bat} or \fn{setenv.cmd}.  For 64-bit builds
+you may need to include the ``amd64'' option on the batch file command
+line.  You may want to set up your system so this batch file gets run
+automatically when you open a command window.  See your compiler and
+system documentation for details.
+
+\subsubsection{Using MinGW g++}
+\index{platform!Windows!MinGW~g++}
+
+Both 32-bit and 64-bit builds are supported using the MinGW ports of
+g++.  (The 32-bit and 64-bit versions of g++ are separate downloads.)
+Use a standard Windows \Tcl/\Tk, such as the
+\htmladdnormallinkfoot{ActiveTcl}{https://www.activestate.com/products/tcl/}
+release from ActiveState.  You will also need to edit the appropriate
+platform file to select g++ as the compiler.  If you are using a 32-bit
+\Tcl/\Tk\ and g++, then the platform file is
+\fn{oommf\bs config\bs platforms\bs wintel.tcl}.  For 64-bit
+\Tcl/\Tk\ and g++ the platform file is
+\fn{oommf\bs config\bs platforms\bs windows-x86\_64.tcl}.
+
+\subsubsection{Using the Cygwin toolkit}\label{par:install.cygwin}
+\index{platform!Windows!Cygwin~environment}
+The \htmladdnormallinkfoot{Cygwin Project}{http://www.cygwin.com/} is
+a free port of the GNU development environment to \Windows, which
+includes the GNU C++ compiler g++ and X11.  To build OOMMF within the
+Cygwin environment, start up a Cygwin or Cygwin64 shell and follow the
+usual \Unix\ build procedure.  The platform name will be \fn{cygtel}
+or \fn{cygwin-x86\_64}, according to whether you are running a 32- or
+64-bit Cygwin \fn{tclsh}, respectively.  The resulting \OOMMF\ build
+requires the Cygwin environment to run, so it will need to be launched
+from a Cygwin shell.  Moreover, \OOMMF\ on Cygwin uses X11 as the
+windowing interface, so you will need to have the Cygwin port of X11
+installed; typically \OOMMF\ will be started from an X11 xterm or
+equivalent.  Of course, you will also need the \Tcl\ and \Tk\ packages
+installed (called \fn{tcl} and \fn{tcl-tk}, respectively, by the
+Cygwin package manager).  To build \OOMMF\ from source you will
+need the \fn{gcc-g++}, \fn{tcl-devel}, and \fn{tcl-tk-devel}
+packages and dependencies.
+
+If you get errors saying a child process couldn't be forked (typically
+with either ``resource temporarily unavailable'' or ``Loaded to
+different address'' error messages), then follow this procedure:
+\begin{enumerate}
+\item Exit all Cygwin processes
+\item Use Windows Explorer or a Windows command shell to launch
+  \fn{c:\bs cygwin\bs bin\bs ash.exe}
+\item Run \fn{/bin/rebaseall} inside the ash shell.
+\end{enumerate}
+Additional information on this problem can be found in the Cygwin
+documentation.
+
+The Cygwin versions of \Tcl/\Tk\ prior to 8.6 were not threaded, so
+\OOMMF\ built with \Tcl/\Tk\ 8.5 and older will likewise not be
+threaded.  This limitation is removed with the Cygwin \Tcl/\Tk\ 8.6
+release.
+
+\subsubsection{Setting the TCL\_LIBRARY environment variable}
+\index{platform!Windows!setting~environment~variables}
+
+If you encounter difficulties during \OOMMF\ start up, you may need to set
+the environment variable
+TCL\_LIBRARY\index{environment~variables!TCL\_LIBRARY}.  (NOTE: This
+is almost never necessary!)
+
+Bring up the Control Panel (e.g., by selecting
+\btn{Settings\pipe Control Panel} off the Start menu), and select
+\btn{System}.  Go to the \btn{Environment} tab, and enter
+TCL\_LIBRARY as the Variable, and the name of the directory containing
+\fn{init.tcl} for the Value, e.g.,
+\begin{verbatim}
+%SystemDrive%\Program Files\Tcl\lib\tcl8.0
+\end{verbatim}
+Click \btn{Set} and \btn{OK} to finish.
+
+\blackhole{
+\paragraph{On \Windows\ 9x}
+Edit the file \fn{autoexec.bat}.  Add a line such as the following:
+\begin{verbatim}
+set TCL_LIBRARY=C:\Program Files\Tcl\lib\tcl8.0
+\end{verbatim}
+} % end-blackhole
+
+%\subsubsection{Checking \fn{\bf .tcl} file association on \Windows~NT}
+%\index{platform!Windows!file~extension~associations}
+%As part of the \Tcl/\Tk\ installation, files with the \fn{.tcl}
+%extension are normally associated with the \fn{wish} application.  This
+%allows \Tcl\ scripts to be launched from
+%\Windows\ Explorer\index{application!Windows~Explorer} by
+%double-clicking on their icon, or from the NT command line without
+%specifying the \fn{tclsh} or \fn{wish} shells.  If this is not working,
+%you may check your installation from the NT command line as follows.
+%First, run the command ``\cd{assoc~.tcl}''.  This should return the file
+%type associated with the \fn{.tcl} extension, e.g., \cd{TclScript}.
+%Next, use the \cd{ftype} command to check the command line associated
+%with that file type, e.g.,
+%%
+%\begin{verbatim}
+%C:\> ftype TclScript
+% "C:\Program Files\Tcl\bin\wish84.exe" "%1" %2 %3 %4 %5 %6 %7 %8 %9
+%\end{verbatim}
+%%
+%Note that the quotes are required as shown to protect spaces in
+%pathnames.  If either \cd{assoc} or \cd{ftype} are incorrect, view the
+%command line help information (``\cd{assoc~/?}'' and ``\cd{ftype~/?}'')
+%for details on making changes.
+
+%\subsubsection{Adding an \OOMMF\ shortcut to your desktop}
+%\index{platform!Windows!desktop~shortcut}
+%
+%Right mouse click on the desktop to bring up the configuration dialog,
+%and select \btn{New\pipe Shortcut}.
+%Enter the command line necessary to bring up \OOMMF, e.g.,
+%\begin{verbatim}
+%tclsh84 c:\oommf\oommf.tcl
+%\end{verbatim}
+
+%Click \btn{Next\bca} and enter \cd{OOMMF} for the shortcut name.
+%Select \btn{Finish}.
+
+%At this point the shortcut will appear on your desktop with either the
+%tclsh or wish icons.  Right mouse click on the icon and select
+%\btn{Properties}.  Select the \btn{ShortCut} tab,
+%and bring up \btn{Change Icon\ldots}  Under \btn{File Name:} enter the
+%\OOMMF\ icon file, e.g.,
+%\begin{verbatim}
+%C:\oommf\oommf.ico
+%\end{verbatim}
+%
+%Click \btn{OK}.  Back on the \btn{Shortcut} tab, change the
+%\btn{Run:} selection to
+%Minimized.  Click \btn{OK} to exit the Properties dialog box.  Double
+%clicking on the \OOMMF\ icon should now bring up the
+%\OOMMF\ application \app{mmLaunch}.
+%\index{platform!Windows!configuration|)}
+

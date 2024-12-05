@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2018.2 (Released May 16, 2018) -->
+<HTML>
+<HEAD>
+<TITLE>Standard Oxs_Ext Child Classes</TITLE>
+<META NAME="description" CONTENT="Standard Oxs_Ext Child Classes">
+<META NAME="keywords" CONTENT="userguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2018.2">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userguide.css">
+
+<LINK REL="next" HREF="Contributed_Oxs_Ext_Child_C.html">
+<LINK REL="previous" HREF="OOMMF_eXtensible_Solver_Bat.html">
+<LINK REL="up" HREF="OOMMF_eXtensible_Solver.html">
+<LINK REL="next" HREF="Atlases.html">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF",text="#000000",LINK="#0000FF",
+            VLINK="#4498F0",ALINK="00FFFF">
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html535"
+  HREF="Atlases.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html531"
+  HREF="OOMMF_eXtensible_Solver.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html525"
+  HREF="OOMMF_eXtensible_Solver_Bat.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html533"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html536"
+  HREF="Atlases.html">Atlases</A>
+<B> Up:</B> <A NAME="tex2html532"
+  HREF="OOMMF_eXtensible_Solver.html">OOMMF eXtensible Solver</A>
+<B> Previous:</B> <A NAME="tex2html526"
+  HREF="OOMMF_eXtensible_Solver_Bat.html">OOMMF eXtensible Solver Batch</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00830000000000000000"></A><A NAME="sec:oxsext"></A>
+<BR>
+Standard Oxs_Ext Child Classes
+</H1><A NAME="4596"></A>
+An Oxs simulation is built as a collection of <TT>Oxs_Ext</TT> (Oxs
+Extension) objects.  These are defined via Specify blocks in the input
+<A HREF="MIF_2.1.html#sec:mif2format">MIF&nbsp;2 file.</A>
+The reader will find the information and
+<A HREF="Sample_MIF_2.1_File.html#fig:mif2sample">sample MIF file</A> provided in that section to be a helpful
+adjunct to the material presented below.  Addition example MIF&nbsp;2
+files can be found in the directory <TT><B>oommf/app/oxs/examples</B></TT>.
+
+<P>
+This section describes the <TT>Oxs_Ext</TT> classes available in the
+standard OOMMF distribution, including documentation of their Specify
+block initialization strings, and a list of some sample MIF files from
+the <TT><B>oommf/app/oxs/examples</B></TT> directory that use the class.  The
+standard <TT>Oxs_Ext</TT> objects, i.e., those that are distributed with
+OOMMF, can be identified by the <TT>Oxs_</TT> prefix in their names.
+Additional <TT>Oxs_Ext</TT> classes may be available on your system.  Check
+local documentation for details.
+
+<P>
+In the following presentation, the <TT>Oxs_Ext</TT> classes are organized
+into 8 categories: atlases, meshes, energies, evolvers, drivers, scalar
+field objects, vector field objects, and MIF support classes.  The
+following <TT>Oxs_Ext</TT> classes are currently available:
+
+<UL>
+<LI><B>Atlases</B>
+   <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+      <A HREF="Atlases.html#PTBA">Oxs_BoxAtlas</A>        </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Atlases.html#PTEA">Oxs_EllipseAtlas</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Atlases.html#PTESA">Oxs_EllipsoidAtlas</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Atlases.html#PTIA">Oxs_ImageAtlas</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Atlases.html#PTMA">Oxs_MultiAtlas</A>      </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Atlases.html#PTSA">Oxs_ScriptAtlas</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+<LI><B>Meshes</B>
+   <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+      <A HREF="Meshes.html#PTRM">Oxs_RectangularMesh</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Meshes.html#PTPRM">Oxs_PeriodicRectangularMesh</A>
+    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+<LI><B>Energies</B>
+   <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+      <A HREF="Energies.html#PTCA">Oxs_CubicAnisotropy</A>     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Energies.html#PTDE">Oxs_Demag</A>              </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Energies.html#PTE6">Oxs_Exchange6Ngbr</A>       </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Energies.html#PTEP">Oxs_ExchangePtwise</A>     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Energies.html#PTFZ">Oxs_FixedZeeman</A>         </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Energies.html#PTSE">Oxs_RandomSiteExchange</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Energies.html#PTSU">Oxs_ScriptUZeeman</A>       </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Energies.html#PTSD">Oxs_SimpleDemag</A>        </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Energies.html#PTSZ">Oxs_StageZeeman</A>         </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Energies.html#PTTZ">Oxs_TransformZeeman</A>    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Energies.html#PTTS">Oxs_TwoSurfaceExchange</A>  </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Energies.html#PTUA">Oxs_UniaxialAnisotropy</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Energies.html#PTUE">Oxs_UniformExchange</A>     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Energies.html#PTUZ">Oxs_UZeeman</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+<LI><B>Evolvers</B>
+   <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+      <A HREF="Evolvers.html#PTCG">Oxs_CGEvolve</A>            </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>    <A HREF="Evolvers.html#PTEE">Oxs_EulerEvolve</A>  </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+      <A HREF="Evolvers.html#PTRK">Oxs_RungeKuttaEvolve</A>    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>    <A HREF="Evolvers.html#PTSX">Oxs_SpinXferEvolve</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+<LI><B>Drivers</B>
+   <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+     <A HREF="Drivers.html#PTMD">Oxs_MinDriver</A>      </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>    <A HREF="Drivers.html#PTTD">Oxs_TimeDriver</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+<LI><B>Scalar Field Objects</B>
+   <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+     <A HREF="Field_Objects.html#PTASF">Oxs_AtlasScalarField</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTLSF">Oxs_LinearScalarField</A>        </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+     <A HREF="Field_Objects.html#PTRSF">Oxs_RandomScalarField</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTSSF">Oxs_ScriptScalarField</A>        </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+     <A HREF="Field_Objects.html#PTUSF">Oxs_UniformScalarField</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTVMSF">Oxs_VecMagScalarField</A>       </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+     <A HREF="Field_Objects.html#PTSOSF">Oxs_ScriptOrientScalarField</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTAOSF">Oxs_AffineOrientScalarField</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+     <A HREF="Field_Objects.html#PTATSF">Oxs_AffineTransformScalarField</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT> <A HREF="Field_Objects.html#PTISF">Oxs_ImageScalarField</A>
+   </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+<LI><B>Vector Field Objects</B>
+  <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+    <A HREF="Field_Objects.html#PTAVF">Oxs_AtlasVectorField</A>
+    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTFVF">Oxs_FileVectorField</A>          </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+    <A HREF="Field_Objects.html#PTPRVF">Oxs_PlaneRandomVectorField</A>
+    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTRVF">Oxs_RandomVectorField</A>        </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+    <A HREF="Field_Objects.html#PTSVF">Oxs_ScriptVectorField</A>
+    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTUVF">Oxs_UniformVectorField</A>       </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+    <A HREF="Field_Objects.html#PTSOVF">Oxs_ScriptOrientVectorField</A>
+    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTAOVF">Oxs_AffineOrientVectorField</A> </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+    <A HREF="Field_Objects.html#PTATVF">Oxs_AffineTransformVectorField</A>
+    </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT"><TT>  <A HREF="Field_Objects.html#PTMVF">Oxs_MaskVectorField</A>          </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT> 
+    <A HREF="Field_Objects.html#PTIVF">Oxs_ImageVectorField</A>
+   </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+<LI><B>MIF Support Classes</B>
+  <BR><TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">&nbsp;</TD><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=0><TT>
+      <A HREF="MIF_Support_Classes.html#PTLV">Oxs_LabelValue</A>
+     </TT></TD>
+<TD ALIGN="LEFT">&nbsp;</TD><TD></TD>
+<TD ALIGN="LEFT">&nbsp;</TD></TR>
+</TABLE>
+</LI>
+</UL>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html537"
+  HREF="Atlases.html">Atlases</A>
+<LI><A NAME="tex2html538"
+  HREF="Meshes.html">Meshes</A>
+<LI><A NAME="tex2html539"
+  HREF="Energies.html">Energies</A>
+<LI><A NAME="tex2html540"
+  HREF="Evolvers.html">Evolvers</A>
+<LI><A NAME="tex2html541"
+  HREF="Drivers.html">Drivers</A>
+<LI><A NAME="tex2html542"
+  HREF="Field_Objects.html">Field Objects</A>
+<LI><A NAME="tex2html543"
+  HREF="MIF_Support_Classes.html">MIF Support Classes</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel--><A NAME="tex2html1"
+  HREF="https://math.nist.gov/oommf"><IMG ALT="OOMMF Home" BORDER="2" SRC="oommficon.gif"></A> 
+<A NAME="tex2html535"
+  HREF="Atlases.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.gif"></A> 
+<A NAME="tex2html531"
+  HREF="OOMMF_eXtensible_Solver.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.gif"></A> 
+<A NAME="tex2html525"
+  HREF="OOMMF_eXtensible_Solver_Bat.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.gif"></A>  
+<A NAME="tex2html533"
+  HREF="docindex.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.gif"></A>
+<BR>
+<!--End of Navigation Panel-->
+<BR><I><A HREF="Credits.html#sec:Credits">OOMMF Documentation Team</A><BR>September 30, 2022</I>
+</BODY>
+</HTML>

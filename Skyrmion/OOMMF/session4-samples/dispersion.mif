@@ -1,0 +1,248 @@
+# MIF 2.1
+# MIF Example File: dispersion.mif
+# Based on
+#
+# G. Venkat, D. Kumar, M. Franchin, O. Dmytriiev, M. Mruczkiewicz,
+# H. Fangohr, A. Barman, M. Krawczyk, and A. Prabhakar, "Proposal for a
+# standard micromagnetic problem: Spin wave dispersion in a magnonic
+# waveguide," IEEE Transactions on Magnetics, 49(1), 524-529 (2013).
+# 
+
+RandomSeed 10
+
+set pi [expr {4*atan(1.0)}]
+set mu0 [expr {4*$pi*1e-7}]
+
+Parameter relax 0  ;# Should be either 0 or 1
+
+# Saturation magnetization
+Parameter Ms 8e5   ;# A/m
+
+# Exchange
+Parameter A 13e-12 ;# J/m
+
+Parameter gyromagnetic_ratio 176e9  ;# rad/(s.T)
+set gamma [expr {-1*$mu0*$gyromagnetic_ratio}]
+## gamma is approximately -2.211e5 m/A·s
+
+# Strip geometry (in meters)
+Parameter thickness      1e-9
+Parameter width         50e-9
+Parameter length      1000e-9
+
+# Simulation cellsize
+Parameter xcellsize      2e-9
+Parameter ycellsize      2e-9
+Parameter zcellsize      1e-9
+
+# Bias field
+Parameter H0 804e3  ;# A/m
+
+# Excitation type.
+# In the following, H0{x,y,z} are the bias field components,
+# and wk{x,y,z} are the excitation wave vector weights.
+Parameter extype backward  ;# One of backward, forward, or surface
+if {[string match backward $extype]} {
+   set H0x $H0 ; set H0y 0.0 ; set H0z 0.0
+   set wkx 1.0 ; set wky 0.0 ; set wkz 0.0
+} elseif {[string match forward $extype]} {
+   set H0x 0.0 ; set H0y 0.0 ; set H0z $H0
+   set wkx 1.0 ; set wky 0.0 ; set wkz 0.0
+} elseif {[string match surface $extype]} {
+   set H0x $H0 ; set H0y 0.0 ; set H0z 0.0
+   set wkx 0.0 ; set wky 1.0 ; set wkz 0.0
+} else {
+   error "Unrecognized excitation type request: $extype"
+}
+
+# Damping parameter
+Parameter alpha 0.0
+
+# Atlas
+Specify Oxs_BoxAtlas:atlas [subst {
+   xrange {0 $length}
+   yrange {0 $width}
+   zrange {0 $thickness}
+}]
+
+# Mesh
+Ignore Specify Oxs_PeriodicRectangularMesh:mesh [subst {
+   cellsize {$xcellsize $ycellsize $zcellsize}
+   atlas :atlas
+   periodic x
+}]
+Specify Oxs_RectangularMesh:mesh [subst {
+   cellsize {$xcellsize $ycellsize $zcellsize}
+   atlas :atlas
+}]
+
+# Exchange
+Specify Oxs_UniformExchange [subst {
+  A   $A
+}]
+
+# Demag
+Specify Oxs_Demag {}
+
+# Bias field
+Specify Oxs_FixedZeeman:Bias [subst {
+   field {$H0x $H0y $H0z}
+}]
+
+if {$relax} { # Find equilibrium configuration
+   set basename "dispersion-$extype-relax"
+   Specify Oxs_CGEvolve:evolver {}
+   Specify Oxs_MinDriver [subst {
+      evolver :evolver
+      mesh :mesh
+      Ms $Ms
+      m0 { 1.0 0.02 0.01 }
+      stopping_mxHxm 1e-10
+      basename $basename
+   }]
+
+   # Output
+   Destination archive mmArchive
+   Schedule Oxs_MinDriver::Spin archive stage 1
+
+} else {  # Dynamic simulation
+
+   Parameter stage_time   1e-12
+   Parameter run_time     5e-9
+   set number_of_stages [expr {round($run_time/$stage_time)}]
+
+   proc sinc { x } {
+      if {abs($x)>0.01} {
+         return [expr {sin($x)/$x}]
+      } else {
+         set xsq [expr {$x*$x}]
+         return [expr {($xsq/120. - 1/6.)*$xsq + 1}]
+      }
+   }
+
+   proc deriv_sinc { x } {
+      # Derivative of sinc.  Probably gives about
+      # 12 decimal digits of accuracy.
+      if {abs($x)>0.01} {
+         return [expr {($x*cos($x)-sin($x))/($x*$x)}]
+      } else {
+         return [expr {(($x*$x/-840. + 1/30.)*$x*$x - 1/3.)*$x}]
+      }
+   }
+
+   Parameter Hamp 400e3  ;# Excitation field amplitude, in A/m
+   Parameter N 250       ;# Frequency samples
+
+   Parameter Hasym 0  ;# 0 => y-symmetric excitation, 1 => asymmetric
+   if {$Hasym} {
+      set Hmask HmaskAsymmetric
+   } else {
+      set Hmask Hmask
+   }
+
+   set kc [expr {$N*$pi/$length}]  ;# Spatial cutoff value
+
+   proc Hmask {x y z} { ;# Import is rawpt
+      global length width Hamp kc
+      global wkx wky wkz
+
+      set kcx [expr {$kc*($x-0.5*$length)}]
+      set kcy [expr {$kc*($y-0.5*$width)}]
+      set scale [expr {$Hamp*[sinc $kcx]*[sinc $kcy]}]
+      set sx [expr {$wkx*$scale}]
+      set sy [expr {$wky*$scale}]
+      set sz [expr {$wkz*$scale}]
+      return [list $sx $sy $sz]
+   }
+
+   proc HmaskAsymmetric  {x y z} {
+      # This mask is asymmetric along the y-axis.
+      # Import is rawpt.
+      global length width Hamp kc pi
+      global wkx wky wkz
+      set N 25 ;# Number of sin terms
+
+      set kcx [expr {$kc*($x-0.5*$length)}]
+      set yrat [expr {$pi*$y/$width}]
+      set yfactor 0.0
+      for {set i 1} {$i<=25} {incr i} {
+         set yfactor [expr {$yfactor + sin($i*$yrat)}]
+      }
+      set scale [expr {$Hamp*[sinc $kcx]*$yfactor}]
+      set sx [expr {$wkx*$scale}]
+      set sy [expr {$wky*$scale}]
+      set sz [expr {$wkz*$scale}]
+      return [list $sx $sy $sz]
+   }
+
+   Specify Oxs_ScriptVectorField:Hmask [subst {
+      script $Hmask
+      script_args rawpt
+      atlas :atlas
+   }]
+
+   Parameter toff 50e-12 ;# Pulse peak offset, in s
+   Parameter fc 500e9    ;# Temporal cutoff frequency, Hz
+   set wc [expr {2*$pi*$fc}]
+   proc Hpulse { t } { ;# Import is total time
+      global toff wc
+      set wt [expr {$wc*($t-$toff)}]
+      set val [sinc $wt]
+      set dval [expr {$wc*[deriv_sinc $wt]}]
+      return [list $val $val $val $dval $dval $dval]
+   }
+
+   Specify Oxs_TransformZeeman [subst {
+      field :Hmask
+      type diagonal
+      script Hpulse
+      script_args total_time
+   }]
+
+   set min_timestep 1e-15
+   Parameter rkmethod rk4 ;# One of rk2, rk4, rkf54, rkf54m, or rkf54s
+   ## Default is rk4 which tends to be more stable than standard default
+   ## rkf54 for alpha = 0.
+   Specify Oxs_RungeKuttaEvolve:evolver [subst {
+      alpha $alpha
+      gamma_G $gamma
+      comment {
+       # Oxs_RungeKuttaEvolve error control options:
+       energy_precision -1
+       error_rate 1.0
+       absolute_step_error 0.2
+       relative_step_error 0.01
+       error_rate 10.0
+       absolute_step_error 2
+       relative_step_error 0.1
+       min_timestep $min_timestep
+      }
+      method $rkmethod
+   }]
+
+   # Driver
+   set start_m0 "dispersion-$extype-start.omf"
+   if {$Hasym} {
+      set basename "dispersion-$extype-asym"
+   } else {
+      set basename "dispersion-$extype"
+   }
+   Specify Oxs_TimeDriver [subst {
+      evolver :evolver
+      mesh :mesh
+      Ms $Ms
+      m0 { Oxs_FileVectorField {
+         file  [list $start_m0]
+         atlas :atlas
+         norm  1
+      } }
+      stopping_time  { { $stage_time $number_of_stages } :expand: }
+      basename $basename
+   }]
+
+   # Sample Destination and Schedule commands.
+   # Modify as desired.
+   Destination archive mmArchive
+   Schedule DataTable archive Stage 1
+   Schedule Oxs_TimeDriver::Magnetization archive stage 1
+}

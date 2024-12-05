@@ -1,0 +1,102 @@
+# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class by  S. Rohart and A. Thiaville
+# (Laboratoire de Physique des Solides, Université Paris-Sud, Orsay, FRANCE).
+# Please quote S. ROHART and A. Thiaville Phys. Rev. B 2013 when using the
+# Oxs_DMExchange6Ngbr class.
+
+Parameter D 3.5
+set DD [expr {$D/1000.}]
+
+Parameter film_thickness 0.6e-9
+
+Parameter xcell 2.0e-9
+Parameter ycell 2.0e-9
+Parameter zcell $film_thickness
+
+Parameter Ms 200e3
+
+set init_skyrmion_r 50e-9
+set init_skyrmion_x $init_skyrmion_r 
+set init_skyrmion_y $init_skyrmion_r 
+set init_skyrmion_rsq_inner [expr {0.1*$init_skyrmion_r*$init_skyrmion_r}]
+set init_skyrmion_rsq_outer [expr {0.2*$init_skyrmion_r*$init_skyrmion_r}]
+
+set xmax [expr {10*$init_skyrmion_r}]
+set ymax [expr {4*$init_skyrmion_r}]
+
+set divot_r [expr {4*$xcell}]
+Specify Oxs_MultiAtlas:atlas [subst {
+   atlas { Oxs_BoxAtlas:divot {
+      xrange { [expr {$init_skyrmion_r-$divot_r}] [expr {$init_skyrmion_r+$divot_r}] }
+      yrange { [expr {$init_skyrmion_r-$divot_r}] [expr {$init_skyrmion_r+$divot_r}] }
+      zrange { 0 $film_thickness }
+   }}
+   atlas { Oxs_BoxAtlas:world { 
+      xrange { 0 $xmax }
+      yrange { 0 $ymax }
+      zrange { 0 $film_thickness }
+  } }
+}]
+
+Specify Oxs_RectangularMesh:mesh [subst {
+  cellsize { $xcell $ycell $zcell }
+  atlas :atlas
+}]
+
+Specify Oxs_UniformExchange:HeisenbergEx {
+  A 1.6e-11
+}
+
+#uniform DMI is used here
+Specify Oxs_DMExchange6Ngbr:DMEx [subst {
+  default_D $DD
+  atlas :atlas
+  D { 
+    world world $DD
+  }
+}]
+
+Parameter divot_rat 1.1
+set K1 0.51e6
+set K1_divot [expr {$divot_rat*$K1}]
+Specify Oxs_UniaxialAnisotropy:Anisotropy [subst {
+   axis {0 0 1}
+   K1 { Oxs_AtlasScalarField {
+      atlas :atlas
+      default_value $K1
+      values {
+         divot $K1_divot
+      }
+   }}
+}]
+
+Specify Oxs_Demag {}
+
+proc Skyrmion { x y z } {
+   global init_skyrmion_x init_skyrmion_y
+   global init_skyrmion_rsq_inner init_skyrmion_rsq_outer
+   set xoff [expr {$init_skyrmion_x-$x}]
+   set yoff [expr {$init_skyrmion_y-$y}]
+   set rsq [expr {$xoff*$xoff+$yoff*$yoff}]
+   if {$rsq<$init_skyrmion_rsq_inner} { return [list 0. 0.  1.] }
+   if {$rsq>$init_skyrmion_rsq_outer} { return [list 0. 0. -1.] }
+   return [list $xoff $yoff 0]
+}
+
+Specify Oxs_CGEvolve {}
+Specify Oxs_MinDriver [subst {
+  evolver Oxs_CGEvolve
+  stopping_mxHxm 1e-5
+  mesh :mesh
+  Ms $Ms
+  m0 { Oxs_ScriptVectorField { 
+     script Skyrmion
+     atlas :atlas
+     script_args rawpt
+  } }
+}]
+
+#Destination archive mmArchive
+#Schedule Oxs_TimeDriver::Magnetization archive stage 1

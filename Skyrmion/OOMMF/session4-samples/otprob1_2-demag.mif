@@ -1,0 +1,132 @@
+# MIF 2.2
+#
+# This file was based in part on the skirmion.mif example file included with
+# the Oxs_DMExchange6Ngbr extension class by  S. Rohart and A. Thiaville
+# (Laboratoire de Physique des Solides, Université Paris-Sud, Orsay, FRANCE).
+# Please quote S. ROHART and A. Thiaville Phys. Rev. B 2013 when using the
+# Oxs_DMExchange6Ngbr class.
+
+Parameter D 3.5
+set DD [expr {$D/1000.}]
+
+Parameter film_thickness 0.6e-9
+
+Parameter start_file otprob1-start-demag.omf
+
+Parameter xcell 2.0e-9
+Parameter ycell 2.0e-9
+Parameter zcell $film_thickness
+
+Parameter u 100
+Parameter beta 0.04
+Parameter alpha 0.1
+
+set flip 0
+if {$alpha < $beta} { set flip 1 }
+
+SetOptions [subst {
+   basename [format "otprob1_2-demag-alpha%5.3f" $alpha]
+   vector_field_output_format {binary 4}
+}]
+
+set Ms 200e3
+
+set init_skyrmion_r 50e-9
+set xmax [expr {10*$init_skyrmion_r}]
+set ymax [expr {4*$init_skyrmion_r}]
+
+set init_skyrmion_x $init_skyrmion_r 
+set init_skyrmion_y $init_skyrmion_r 
+if {$flip} {
+   set init_skyrmion_y [expr {$ymax-$init_skyrmion_y}]
+}
+
+set divot_r [expr {4*$xcell}]
+Specify Oxs_MultiAtlas:atlas [subst {
+   atlas { Oxs_BoxAtlas:divot {
+      xrange { [expr {$init_skyrmion_x-$divot_r}] [expr {$init_skyrmion_x+$divot_r}] }
+      yrange { [expr {$init_skyrmion_y-$divot_r}] [expr {$init_skyrmion_y+$divot_r}] }
+      zrange { 0 $film_thickness }
+   }}
+   atlas { Oxs_BoxAtlas:world { 
+      xrange { 0 $xmax }
+      yrange { 0 $ymax }
+      zrange { 0 $film_thickness }
+      name world
+  } }
+}]
+
+Specify Oxs_RectangularMesh:mesh [subst {
+  cellsize { $xcell $ycell $zcell }
+  atlas :atlas
+}]
+
+Specify Oxs_UniformExchange:HeisenbergEx {
+  A 1.6e-11
+}
+
+#uniform DMI is used here
+Specify Oxs_DMExchange6Ngbr:DMEx [subst {
+  default_D $DD
+  atlas :atlas
+  D { 
+    world world $DD
+  }
+}]
+
+Parameter divot_rat 1.1
+set K1 0.51e6
+set K1_divot [expr {$divot_rat*$K1}]
+Specify Oxs_UniaxialAnisotropy:Anisotropy [subst {
+   axis { 0 0 1}
+   K1 { Oxs_AtlasScalarField {
+      atlas :atlas
+      default_value $K1
+      values {
+         divot $K1_divot
+      }
+   }}
+}]
+
+Specify Oxs_Demag {}
+
+Specify Oxs_FileVectorField:start_file [subst {
+   file $start_file
+   atlas :atlas
+   norm 1.0
+}]
+set m0 :start_file  ;# Unflipped initial state
+
+if {$flip} {
+   Specify Oxs_AffineOrientVectorField:flipped_start_file [subst {
+      field :start_file
+      M {1 -1 1}
+      offset {0 $ymax 0}
+   }]
+   Specify Oxs_AffineTransformVectorField:mirror_start_file {
+      field :flipped_start_file
+      M {1 -1 1}
+   }
+   set m0 :mirror_start_file  ;# Flipped initial state
+}
+
+Specify Anv_SpinTEvolve:evolver [subst {
+  alpha $alpha
+  u $u
+  beta $beta
+  method rkf54s
+}]
+
+# Select stopping_time and stage_count suitable for animation.
+# 80 x 50 ps = 4 ns simulation time
+Specify Oxs_TimeDriver [subst {
+  evolver :evolver
+  stopping_time 0.05e-9
+  stage_count 80
+  mesh :mesh
+  Ms $Ms
+  m0 $m0 comment {Flipped or not depends on alpha<beta}
+}]
+
+#Destination archive mmArchive
+#Schedule Oxs_TimeDriver::Magnetization archive stage 1
