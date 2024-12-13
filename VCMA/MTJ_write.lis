@@ -1,0 +1,156 @@
+Using: /apps/syn/hspice/hspice/linux64/hspice MTJ_write.sp
+ ****** HSPICE -- O-2018.09-SP1-2 linux64 (Jan 24 2019) ******                  
+  Copyright (c) 1986 - 2024 by Synopsys, Inc. All Rights Reserved.              
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: MTJ_write.sp                                                      
+  Command line options: /apps/syn/hspice/hspice/linux64/hspice MTJ_write.sp
+  Start time: Tue Nov 19 01:48:15 2024
+ lic:  
+ lic: FLEXlm: SDK_11.6.9.6 
+ lic: USER:   nasrullah.i          HOSTNAME: ece-lnx-05 
+ lic: HOSTID: "34800d31d7a8"       PID:      113021 
+ lic: Using FLEXlm license file: 
+ lic: 27020@licsvr.ece.ufl.edu 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 09-oct-2025/2024.09 
+ lic: 1(in_use)/100(total) FLOATING license(s) on SERVER 27020@licsvr.ece.ufl.edu 
+ lic:   
+  **warning** (LLG_solver.inc:50) Parameter ipma is defined as an expression containing output signals, which may cause incorrect result. Recommend replacing output signals with user-defined functions.
+1****** HSPICE -- O-2018.09-SP1-2 linux64 (Jan 24 2019) ******                  
+ ******  
+ ************************************************************************************
+
+ ****** circuit name directory
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 xmtj.                           mtj                1.00 
+        2 xmtj.xra.                       ra                 1.00 
+        3 xmtj.xllg.                      llg                1.00 
+        4 xmtj.xhd.                       hd                 1.00 
+  **info** (MTJ_write.sp:90) DC voltage reset to initial transient source value in source 0:v_vcma. new dc=0.0000D+00
+  **warning** (MTJ_write.sp:75) Capacitance value for element c_eb is 0.000. Capacitance should be a positive, non-zero value.
+  **warning** (HeatDF.inc:42) Capacitance of 3.540 for xmtj.xhd.cl0 is too high. Please verify capacitance value.
+  **warning** (MTJ_write.sp:110) Could not find branch element xmtj.ve1 ;branch output ignored
+  **warning** (LLG_solver.inc:75) Value of resistance 3:r_is defined is limited to 0.000010 (RESMIN). Please specify a resistor value larger than the value of option RESMIN or set option RESMIN to a smaller value.
+  
+             
+ Info:'Recovered resistors' occurs 16 times
+ Summary of recovered resistors to avoid V loop:
+ -----------------------------
+ |Location     |Resistor     |
+ |-------------+-------------|
+ |HeatDF.inc:33|xmtj.xhd.rl01|
+ |HeatDF.inc:34|xmtj.xhd.rl12|
+ |HeatDF.inc:35|xmtj.xhd.rl23|
+ |HeatDF.inc:36|xmtj.xhd.rl34|
+ |HeatDF.inc:37|xmtj.xhd.rl45|
+ |HeatDF.inc:38|xmtj.xhd.rl56|
+ |HeatDF.inc:39|xmtj.xhd.rl67|
+ |HeatDF.inc:55|xmtj.xhd.rm01|
+ |HeatDF.inc:56|xmtj.xhd.rm02|
+ |HeatDF.inc:57|xmtj.xhd.rr01|
+ -----------------------------
+              
+
+  **warning** the following singular supplies were terminated to 1 meg resistor 
+          supply       node1            node2
+(MTJ_model.inc:29)e_ias                   1:ias              defined in subckt mtj                   0:0                defined in subckt 0               
+(Resistor.inc:21)e_phi                   2:phi              defined in subckt ra                    0:0                defined in subckt 0               
+(Resistor.inc:41)e_rmtj                  2:rmtj             defined in subckt ra                    0:0                defined in subckt 0               
+(Resistor.inc:30)e_rp                    2:rp               defined in subckt ra                    0:0                defined in subckt 0               
+(Resistor.inc:20)e_th                    2:th               defined in subckt ra                    0:0                defined in subckt 0               
+(Resistor.inc:15)e_thip                  2:thip             defined in subckt ra                    0:0                defined in subckt 0               
+(Resistor.inc:18)e_thp                   2:thp              defined in subckt ra                    0:0                defined in subckt 0               
+(LLG_solver.inc:96)e_dmz_sum_prec_damp_torq        3:mz_sum_prec_damp_torq defined in subckt llg                   0:0                defined in subckt 0               
+(LLG_solver.inc:49)e_msi                   3:msi              defined in subckt llg                   0:0                defined in subckt 0               
+(LLG_solver.inc:41)e_nz                    3:nz               defined in subckt llg                   0:0                defined in subckt 0               
+(LLG_solver.inc:28)e_p                     3:p                defined in subckt llg                   0:0                defined in subckt 0               
+(LLG_solver.inc:51)e_thste                 3:thste            defined in subckt llg                   0:0                defined in subckt 0               
+      
+
+Element variations(Local):   element              parameter
+ *****************************************************************
+ ******  option summary
+ ******
+ runlvl  = 3         bypass  = 2.0000    
+  Opening plot unit= 15
+ file=MTJ_write.pa0
+
+ ******
+ ************************************************************************************
+
+ ****** transient analysis tnom=  25.000 temp=  25.000 ******
+  **warning** (MTJ_write.sp:103) Measure results may be incorrect since initial start time is non-zero.
+   i_avg_ve= failed                         measure parameter failed
+   i_avg_vstt= failed                         measure parameter failed
+ t_start= 104.0500n
+ t_finish=   failed
+ tsw=   failed
+ final_state=  23.1093m
+ t_mid=   failed
+ i_avg_ve=   failed
+ i_avg_vstt=   failed
+ v_avg_ve=   failed  from=   failed     to=   failed
+ v_avg_vstt=   failed  from=   failed     to=   failed
+
+          ***** job concluded
+ ******  
+ ************************************************************************************
+
+ ****** job statistics summary tnom=  25.000 temp=  25.000 ******
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: AMD EPYC 7662 64-Core Processor
+ cpu MHz	: 2000.000
+  
+ OS:
+ Linux version 3.10.0-1160.119.1.el7.x86_64 (mockbuild@x86-vm-39.brew-001.prod.iad2.dc.redhat.com) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) ) #1 SMP Tue May 14 11:55:25 EDT 2024
+
+
+  ******  HSPICE Threads Information  ******
+
+  Command Line Threads Count :     1
+  Available CPU Count        :   128
+  Actual Threads Count       :     1
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =      61 # elements   =     102
+  # resistors   =      32 # capacitors =      20 # inductors   =       0
+  # mutual_inds =       0 # vccs       =      12 # vcvs        =      31
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       7
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =       0 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =       0
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           0.00           1           0
+  transient          0.95      300001        9391        2741 rev=       285
+  readin             0.02
+  errchk             0.01
+  setup              0.00
+  output             0.00
+
+
+           peak memory used        297.51 megabytes
+           total cpu time            1.11 seconds
+           total elapsed time        0.71 seconds
+           job started at     01:48:15 11/19/2024
+           job ended   at     01:48:16 11/19/2024
+
+
+
+>info:         ***** hspice job concluded
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.03(s)
