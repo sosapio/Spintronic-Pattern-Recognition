@@ -1,0 +1,8 @@
+$DATA1 SOURCE='HSPICE' VERSION='O-2018.09-SP1-2 linux64' PARAM_COUNT=0
+.TITLE '************************************************************************************'
+ t_start          t_finish         tsw              final_state     
+ t_mid            i_avg_ve         i_avg_vstt       v_avg_ve        
+ v_avg_vstt       temper           alter#          
+  1.041e-07          failed           failed         2.311e-02      
+    failed           failed           failed           failed       
+    failed          25.0000        1               
