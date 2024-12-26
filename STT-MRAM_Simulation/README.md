@@ -2,20 +2,13 @@ The codes are origianlly built from Fernando Garc´ıa-Redondo et al. A Compact 
 Scalable MTJ Simulation. arXiv:2106.04976 [cs]. June
 2021. DOI: 10.48550/arXiv.2106.04976
 
-The codes and README are adjusted by Minyeok Wi
-
-Summary:
-* `plot.ipynb` shows you the s-LLGS solver config, calling (`sllgs_solver.py`)
-* `stochastic_multithread_simulation.py` (calling `sllgs_solver.py`) is the script
-that helps you launching parallel python s-LLGS simulations
-
-**IMPORTANT: Before using the compact models**, read the [s-LLGS Solvers](#s-llgs-solvers) info.
+The codes are adjusted by Minyeok Wi
 
 ## Files organization
 * [README.md](./python_compact_model/README.md) for the MRAM python s-LLGS description
 * `sllgs_solver.py` Python s-LLGS solver and exploration of multiple states MTJ      
-* `plot.ipynb` s-LLGS simulation results
-* `stochastic_multithread_simulation.py` Multi-thread stochastic simulations
+* `plot.ipynb` s-LLGS simulation results, calling (`sllgs_solver.py`)
+* `stochastic_multithread_simulation.py` (calling `sllgs_solver.py`) Multi-thread python stochastic simulations
 
 ## s-LLGS Solvers
 
