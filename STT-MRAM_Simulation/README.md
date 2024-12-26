@@ -1,7 +1,8 @@
-* The codes are origianlly built from Fernando Garc´ıa-Redondo et al. A Compact Model for
+The codes are origianlly built from Fernando Garc´ıa-Redondo et al. A Compact Model for
 Scalable MTJ Simulation. arXiv:2106.04976 [cs]. June
 2021. DOI: 10.48550/arXiv.2106.04976
-* The codes and README are adjusted by Minyeok Wi
+
+The codes and README are adjusted by Minyeok Wi
 
 Summary:
 * `plot.ipynb` shows you the s-LLGS solver config, calling (`sllgs_solver.py`)
