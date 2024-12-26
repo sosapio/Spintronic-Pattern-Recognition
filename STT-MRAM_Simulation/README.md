@@ -1,26 +1,20 @@
+The codes are origianlly built from Fernando Garc´ıa-Redondo et al. A Compact Model for
+Scalable MTJ Simulation. arXiv:2106.04976 [cs]. June
+2021. DOI: 10.48550/arXiv.2106.04976
+The codes and README are adjusted by Minyeok Wi
+
 Summary:
 * `plot.ipynb` shows you the s-LLGS solver config, calling (`sllgs_solver.py`)
 * `stochastic_multithread_simulation.py` (calling `sllgs_solver.py`) is the script
 that helps you launching parallel python s-LLGS simulations
-* These results can be compared against Fooker-Plank simulations (see `plot_sllgs_fpe_comparison.py` script)
-* `analytical.py` and `mtj_fp_fvm.py` contain the Fooker-Plank solvers. Analytical contains the WER/RER fitter for the problem optimization
-* Verilog-a compact models: run the testbenches `tb.scs` and `tb_subckt.scs`
-
-Please, read the full description at [MRAM Framework Description](./doc/README.md).
 
 **IMPORTANT: Before using the compact models**, read the [s-LLGS Solvers](#s-llgs-solvers) info.
 
-
 ## Files organization
-* `doc`
-	* [README.md](./doc/README.md) for the **full MRAM framework description**
-* `src`
-	* `python_compact_model`
-		* [README.md](./python_compact_model/README.md) for the MRAM python s-LLGS description
-		* `sllgs_solver.py` Python s-LLGS solver and exploration of multiple states MTJ      
-		* `plot.ipynb` s-LLGS simulation results
-		* `stochastic_multithread_simulation.py` Multi-thread stochastic simulations
-		* `ode_solver_custom_fn.py` *solve_ivp* auxilar fns derived from Scipy
+* [README.md](./python_compact_model/README.md) for the MRAM python s-LLGS description
+* `sllgs_solver.py` Python s-LLGS solver and exploration of multiple states MTJ      
+* `plot.ipynb` s-LLGS simulation results
+* `stochastic_multithread_simulation.py` Multi-thread stochastic simulations
 
 ## s-LLGS Solvers
 
